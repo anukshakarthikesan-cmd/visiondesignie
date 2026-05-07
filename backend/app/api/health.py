@@ -1,10 +1,17 @@
 """Liveness / config probes for hosting (no secrets in response)."""
 
 from fastapi import APIRouter
+from fastapi.responses import Response
 
 from app.core import config
 
 router = APIRouter(tags=["health"])
+
+
+@router.head("/health", include_in_schema=False)
+def health_head() -> Response:
+    """Liveness probes often use HEAD; avoid relying on implicit GET-only behavior."""
+    return Response(status_code=200)
 
 
 @router.get("/health")
