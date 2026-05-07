@@ -1,8 +1,10 @@
 # Secrets (ignore real env files; keep template examples)
 .env
 **/.env
+**/.env.*
 !.env.example
 !**/.env.example
+!**/.env.production.example
 
 # Python
 __pycache__/
