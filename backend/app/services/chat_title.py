@@ -50,7 +50,7 @@ def _sanitize_title(raw: str) -> str:
 
 def generate_chat_title(messages: list[dict[str, Any]], _chat_type: str | None = None) -> str:
     """Return a single-line title; safe fallback on errors."""
-    from app.services.rag_pipeline import llm
+    from app.services.rag_pipeline import get_llm
 
     excerpt = _format_excerpt(messages)
     if not excerpt.strip():
@@ -66,7 +66,7 @@ Conversation excerpt:
 Title:"""
 
     try:
-        response = llm.invoke(prompt)
+        response = get_llm().invoke(prompt)
         text = getattr(response, "content", None) or str(response)
         out = _sanitize_title(str(text).strip())
         return out if out else "Chat"

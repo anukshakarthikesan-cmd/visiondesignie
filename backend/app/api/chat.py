@@ -12,7 +12,6 @@ from pydantic import BaseModel, Field
 
 from app.core.config import CHAT_RATE_LIMIT
 from app.limiter import limiter
-from app.services.rag_pipeline import stream_chat_response_chunks
 
 router = APIRouter()
 
@@ -40,6 +39,9 @@ class ChatRequest(BaseModel):
 @router.post("/chat")
 @_chat_rate_limit_decorator()
 def chat(request: Request, body: ChatRequest):
+    # Import lazily so web process can bind PORT quickly on cold start.
+    from app.services.rag_pipeline import stream_chat_response_chunks
+
     return StreamingResponse(
         stream_chat_response_chunks(
             body.message,

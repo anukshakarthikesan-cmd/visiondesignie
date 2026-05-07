@@ -19,8 +19,6 @@ import time
 import uuid
 from typing import Any, Iterator, Literal
 
-from langchain_groq import ChatGroq
-
 from app.core.config import GROQ_API_KEY, RAG_RETRIEVAL_DEBUG
 from app.services.fallback_knowledge import FALLBACK_HEADER, FALLBACK_KNOWLEDGE
 from app.services.rag_metrics_supabase import (
@@ -29,18 +27,46 @@ from app.services.rag_metrics_supabase import (
     insert_rag_query_metrics_row,
     is_metrics_enabled,
 )
-from app.services.vector_store import load_vector_store
-
 logger = logging.getLogger(__name__)
 
-# FAISS-backed retriever (see vector_store.load_vector_store)
-vectorstore = load_vector_store()
+# Lazy singletons: avoid heavy model/index loading during module import.
+# This lets Uvicorn bind $PORT quickly on Render, then load on first chat request.
+_vectorstore = None
+_llm = None
+_init_lock = threading.Lock()
 
 
-llm = ChatGroq(
-    api_key=GROQ_API_KEY,
-    model="llama-3.1-8b-instant",
-)
+def _get_vectorstore():
+    global _vectorstore
+    if _vectorstore is None:
+        with _init_lock:
+            if _vectorstore is None:
+                logger.info("Loading FAISS vector store...")
+                from app.services.vector_store import load_vector_store
+
+                _vectorstore = load_vector_store()
+    return _vectorstore
+
+
+def _get_llm():
+    global _llm
+    if _llm is None:
+        with _init_lock:
+            if _llm is None:
+                logger.info("Initializing Groq chat model...")
+                from langchain_groq import ChatGroq
+
+                _llm = ChatGroq(
+                    api_key=GROQ_API_KEY,
+                    model="llama-3.1-8b-instant",
+                )
+    return _llm
+
+
+def get_llm():
+    """Shared Groq client (lazy singleton). Safe for callers like ``chat_title``."""
+    return _get_llm()
+
 
 SMALL_TALK = [
     "hi",
@@ -688,7 +714,7 @@ def _compose_context_with_fallback(
         "query_preview": (clean_query or "")[:500] or None,
     }
 
-    retriever = vectorstore.as_retriever(
+    retriever = _get_vectorstore().as_retriever(
         search_type="mmr",
         search_kwargs={"k": 3, "fetch_k": 8},
     )
@@ -1159,7 +1185,7 @@ def stream_chat_response_chunks(
     try:
         # General RAG: buffer then emit cleaned text once so users do not see RAG echo + ── repair suffix.
         if phase == "none":
-            for msg_chunk in llm.stream(payload):
+            for msg_chunk in _get_llm().stream(payload):
                 content = _stringify_stream_content(getattr(msg_chunk, "content", None))
                 if content:
                     full_response += content
@@ -1170,7 +1196,7 @@ def stream_chat_response_chunks(
             if final_text.strip():
                 yield _format_sse({"chunk": final_text})
         else:
-            for msg_chunk in llm.stream(payload):
+            for msg_chunk in _get_llm().stream(payload):
                 content = _stringify_stream_content(getattr(msg_chunk, "content", None))
                 if content:
                     full_response += content
@@ -1224,7 +1250,7 @@ def ask_question(
 
     _enqueue_rag_query_metrics(chat_id, retrieval_meta)
 
-    response = llm.invoke(payload)
+    response = _get_llm().invoke(payload)
     answer = response.content.strip()
     phase = _detect_consultation_phase(query)
     final_text, _ = post_process_assistant_response(answer, phase)

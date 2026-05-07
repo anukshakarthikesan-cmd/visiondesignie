@@ -5,4 +5,8 @@ services:
     rootDir: backend
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    startCommand: sh -c 'exec uvicorn app.main:app --host 0.0.0.0 --port "${PORT}"'
+    envVars:
+      # Render defaults new services to Python 3.14; rag stack is validated on 3.12.x.
+      - key: PYTHON_VERSION
+        value: 3.12.10
