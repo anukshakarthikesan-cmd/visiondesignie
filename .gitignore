@@ -1,4 +1,4 @@
-# Secrets (do not use `.env.*` — it ignores `.env.example`)
+# Secrets (ignore real env files; keep template examples)
 .env
 **/.env
 !.env.example
