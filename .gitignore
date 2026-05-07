@@ -31,7 +31,3 @@ frontend/dist-ssr/
 
 # Large local docs (keep local only)
 backend/data/documents/
-
-# Large local assets (not pushed)
-backend/data/documents/
-backend/data/vector_store/
