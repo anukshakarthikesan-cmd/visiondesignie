@@ -1,0 +1,147 @@
+.chat-section {
+  margin-bottom: 12px;
+}
+
+.chat-section:last-child {
+  margin-bottom: 0;
+}
+
+.chat-section-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-align: start;
+}
+
+.chat-section-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  text-align: start;
+}
+
+.chat-section-list li {
+  margin-bottom: 0.35rem;
+}
+
+.chat-section-list li:last-child {
+  margin-bottom: 0;
+}
+
+.architect-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.architect-plain-lead {
+  margin-bottom: 0.5rem;
+}
+
+.architect-plain--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.architect-plain__para {
+  margin: 0;
+  line-height: 1.58;
+  text-align: start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.architect-plain {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.58;
+  text-align: start;
+}
+
+.architect-plain--lead {
+  margin-bottom: 0.35rem;
+  color: var(--architect-lead);
+}
+
+.architect-card {
+  background: var(--architect-card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 1px 4px var(--shadow-soft);
+}
+
+.architect-card__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--architect-title);
+  letter-spacing: 0.01em;
+  text-align: start;
+}
+
+.architect-card__body {
+  font-size: 0.9375rem;
+  color: var(--architect-body);
+  line-height: 1.6;
+}
+
+.architect-card__para {
+  margin: 0 0 0.5rem;
+  text-align: inherit;
+}
+
+.architect-card__para:last-child {
+  margin-bottom: 0;
+}
+
+.architect-card__list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.architect-card__list li {
+  margin-bottom: 0.35rem;
+  line-height: 1.6;
+}
+
+.architect-card__list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Inside chat bubbles: same foreground/surface as user messages (no separate card chrome) */
+.chat-bubble .architect-plain,
+.chat-bubble .architect-plain--lead,
+.chat-bubble .architect-plain--stack,
+.chat-bubble .architect-plain__para,
+.chat-bubble .architect-plain-lead {
+  color: inherit;
+  padding: 0;
+}
+
+.chat-bubble .architect-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.65rem 0 0;
+}
+
+.chat-bubble .architect-card:first-of-type {
+  padding-top: 0.5rem;
+}
+
+.chat-bubble .architect-card__title,
+.chat-bubble .architect-card__body,
+.chat-bubble .architect-card__para,
+.chat-bubble .architect-card__list,
+.chat-bubble .chat-section-title {
+  color: inherit;
+}
+
+.chat-bubble .chat-section-list li {
+  color: inherit;
+}

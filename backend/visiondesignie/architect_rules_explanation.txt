@@ -1,0 +1,37 @@
+VISIONDESIGNIE — RULES EXPLAINED SIMPLY (CMDA / NBC / PRACTICE) RAG
+
+CMDA — WHAT IT MEANS TO A HOMEOWNER
+- CMDA is the planning authority for Chennai metro limits — it checks setbacks, height, parking, and use.
+- Your architect submits drawings; CMDA comments or approves per current rules.
+- Different zones inside the city can have different controls — “same city, different rule strip.”
+
+NBC — BIG PICTURE
+- NBC is India’s National Building Code — minimum standards for safety and services.
+- It guides stair width, fire exits in large buildings, accessibility ideas, and coordination between trades.
+- Local bodies adopt NBC ideas in their own checklists.
+
+HEIGHT LIMITS — HOW ARCHITECTS TALK ABOUT IT
+- Height is not one number for all India — it ties to road width, plot size, and zone.
+- A narrow lane may cap floors even if you “fit” in FSI on paper.
+
+PARKING — TYPICAL EXPECTATION
+- Many norms expect car parking for houses above a size threshold; stall size is standardized in practice.
+- Apartments often plan one bay per unit plus visitor slots depending on size class.
+
+FIRE & LIFE SAFETY — WHEN IT MATTERS MORE
+- Small independent houses: basic exit and stove safety still matter.
+- Tall apartments and public buildings: fire stairs, refuge, sprinkler rules escalate — NBC is strict there.
+
+SETBACK TABLES — HOW TO READ THEM
+- Tables list minimum meters by plot width or road class — your site drawing must show those lines.
+- Corner plots may add splay or extra margin on second frontage.
+
+PWD / LOCAL ROADS
+- Entry must not block storm flow; apron and drain details tie to road department conditions sometimes.
+
+APPROVAL SEQUENCE — SIMPLE ORDER
+- Survey → concept plan → structural scheme → services → submission → queries → sanction.
+- Changes after sanction need revision drawings.
+
+WHAT THE CHATBOT SHOULD SAY WHEN NUMBERS ARE UNKNOWN
+- “Exact setback in your street comes from the latest schedule — I’ll use typical teaching examples unless you paste your zone.”

@@ -1,0 +1,22 @@
+VISIONDESIGNIE — CHENNAI / CMDA (HIGH-LEVEL RAG, DEMO)
+Disclaimer: Official control rules change by notification and zone. Always verify with CMDA and your architect.
+
+CMDA ROLE
+- Development control for Chennai metro limits: setbacks, height, coverage, parking, land use.
+- Reviews building plans against applicable regulations for that pocket and road class.
+
+BUILDING APPROVAL (WHAT HOMEOWNERS HEAR)
+- Application with site dimensions, block plans, floor plans, sections, structural stability route when triggered.
+- Queries on setback lines, parking count, height — answered with drawing revisions.
+
+BASIC COMPLIANCE IDEAS
+- Setbacks from site boundaries as per schedule for plot width / road class.
+- Maximum height and floors tied to road width, plot size, and zone — not one number for all Chennai.
+- Parking and access for emergency vehicles on larger buildings.
+
+PLAN APPROVAL IMPORTANCE
+- Sanctioned plan is the legal reference for what may be built; deviations risk notice or future sale issues.
+- Mortgage and insurance sometimes ask for approved drawings.
+
+CHATBOT PHRASE
+- “CMDA checks your drawing against the rule book for your street class — your consultant gives exact metres.”

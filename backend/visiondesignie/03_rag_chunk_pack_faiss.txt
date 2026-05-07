@@ -1,0 +1,98 @@
+VISIONDESIGNIE — CHUNK PACK FOR VECTOR SEARCH (ONE IDEA PER BLOCK)
+Use each === block as a separate embedding chunk for FAISS-style retrieval.
+
+===CHUNK===
+Topic: FSI definition. Floor Space Index relates total allowed built-up area to
+plot area. If FSI is 1.5 and plot is 1200 sq.ft, demo max built-up is about 1800 sq.ft.
+
+===CHUNK===
+Topic: Setback front. For medium urban plots around 1000–1500 sq.ft, a demo front
+setback of about 1.5 m toward the main road is often used in training examples.
+
+===CHUNK===
+Topic: Setback rear. Rear setback near 1.5 m helps light and services access in
+compact residential layouts.
+
+===CHUNK===
+Topic: Setback side. Side setbacks near 1 m each reduce mutual overlooking and help
+fire ladder access in theory — exact meters come from local schedules.
+
+===CHUNK===
+Topic: Floors and road width. Wider roads generally support more height and access;
+a 30 ft road with 1200 sq.ft plot is a common student example for G+2 discussion.
+
+===CHUNK===
+Topic: Parking stall size. A typical car parking bay is often sized around 2.5 m by
+5 m in preliminary planning before detailed parking layout.
+
+===CHUNK===
+Topic: Living room size. Minimum comfortable living room for small Indian homes
+often starts near 10 ft by 12 ft before furniture.
+
+===CHUNK===
+Topic: Bedroom size. A compact bedroom often starts near 10 ft by 10 ft for one bed
+and wardrobe in middle-income housing.
+
+===CHUNK===
+Topic: Kitchen adjacency. Kitchen works best adjacent to dining with short service
+path; avoid placing kitchen door directly opposite toilet door when possible.
+
+===CHUNK===
+Topic: Privacy zoning. Bedrooms should sit in a quieter zone away from the main
+entrance; living and dining handle circulation and guests.
+
+===CHUNK===
+Topic: 2 BHK meaning. Two bedrooms plus hall and kitchen — common family flat type
+in Indian cities; check super area vs carpet area when buying.
+
+===CHUNK===
+Topic: 3 BHK meaning. Three bedrooms plus hall and kitchen — popular for families
+with children or home office.
+
+===CHUNK===
+Topic: NBC role. National Building Code of India sets minimum standards for fire,
+life safety, accessibility, and structural coordination — local bodies adopt it.
+
+===CHUNK===
+Topic: CMDA role. Chennai Metropolitan Development Authority governs building plan
+approval in its jurisdiction; rules change by notification.
+
+===CHUNK===
+Topic: COA role. Council of Architecture regulates use of title “architect” in India;
+only registered architects may sign certain statutory documents.
+
+===CHUNK===
+Topic: Corner plot. Extra road frontage may require additional setback or design
+controls on the secondary frontage.
+
+===CHUNK===
+Topic: Terrace use. Roof terraces are popular for utility, solar, and water tanks;
+structural load and parapet height must be engineered.
+
+===CHUNK===
+Topic: Vastu conversation. Many clients ask for kitchen southeast or master bedroom
+southwest; treat as preference unless user wants strict traditional layout.
+
+===CHUNK===
+Topic: Cost estimation chat. Early cost bands use rate per sq.ft of built-up with
+large uncertainty; final BOQ needs structural and finishes decisions.
+
+===CHUNK===
+Topic: School building basics. Institutional buildings need exits, assembly widths,
+and fire separation per NBC — always specialist architects handle compliance.
+
+===CHUNK===
+Topic: Hospital planning. Hospitals need zoning of OPD, IPD, diagnostics, and
+infection control — not a residential rule set.
+
+===CHUNK===
+Topic: Mall circulation. Malls need core placement, escalator banks, and fire refuge
+floors per codes — retrieval should pull institutional chunks not house setbacks.
+
+===CHUNK===
+Topic: Apartment parking. One slot per unit is a common planning assumption; EV
+charging and visitor parking are emerging add-ons.
+
+===CHUNK===
+Topic: Demo honesty. Prototype answers may simplify numbers; users must verify with
+licensed professionals and official circulars.

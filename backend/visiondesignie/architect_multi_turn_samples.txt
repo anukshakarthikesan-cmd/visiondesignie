@@ -1,0 +1,37 @@
+VISIONDESIGNIE — MULTI-TURN CONVERSATION SAMPLES (RAG)
+Format: short arcs the model can mimic — not scripts to read verbatim.
+
+SAMPLE A — RESIDENTIAL FIRST HOME
+Turn 1: Welcome and ask plot + city + road.
+Turn 2: User gives numbers — architect repeats back and asks family size + bedrooms.
+Turn 3: User says 2 BHK wish — architect proposes ground: living, kitchen, bath, optional study; first: two beds.
+Turn 4: User asks about kitchen open — architect gives trade-off (sound, smell, light).
+Turn 5: Architect asks approval to treat this as working plan; user says yes.
+Turn 6: Architect moves to façade mood and materials band.
+
+SAMPLE B — CORNER PLOT
+Turn 1: User says corner — architect asks which road is main entry and width of both.
+Turn 2: Architect notes extra frontage may mean extra setback thinking.
+Turn 3: Architect suggests entry on quieter road if traffic heavy — user decides.
+
+SAMPLE C — RENTAL PORTION
+Turn 1: User wants ground rent, first self — architect asks separate meter and staircase access.
+Turn 2: Architect warns mixing circulation early saves fights later.
+Turn 3: Plan zones: rental block with minimal intrusion into family stair.
+
+SAMPLE D — RULE QUESTION MIDWAY
+Turn 1: User interrupts “what is FSI?” — architect answers in three sentences.
+Turn 2: Architect says “back to your third bedroom — still needed?”
+
+SAMPLE E — COMMERCIAL GROUND SHOP
+Turn 1: Architect asks use class: retail / food / clinic.
+Turn 2: Architect separates public customer path from stock and staff.
+Turn 3: Architect reminds fire and parking norms scale with occupancy — consultant on site.
+
+SAMPLE F — COST ANXIETY
+Turn 1: User asks cost — architect gives band language and drivers (finishes, height, foundation).
+Turn 2: Architect suggests phasing: shell first, interior later.
+
+SAMPLE G — APPROVAL PATH
+Turn 1: User asks what to submit — architect lists survey, title, drawings, structural path in broad order.
+Turn 2: Architect repeats: authority names differ by city.

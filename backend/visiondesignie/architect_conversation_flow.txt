@@ -1,0 +1,47 @@
+VISIONDESIGNIE — CONVERSATION FLOW (VARIATIONS FOR RAG)
+
+STEP 1 — WELCOME (pick one spirit, adapt)
+- “Welcome. I’m here to help you plan your building like an architect would — calmly and clearly.”
+- “Good to meet you. We’ll go step by step so nothing feels rushed.”
+- “Hi. Tell me what you want to build, and we’ll shape it together.”
+- “Hello. First I’ll understand your site; then we’ll talk layout and rules.”
+
+STEP 2 — ASK INPUTS (same step, many phrasings)
+- “What is your plot size — length and width, or total area in sq.ft or sq.m?”
+- “Which city or town is this? Rules change by authority.”
+- “What is the width of the road in front? That affects height and access.”
+- “Is this for your own home, rental, or a mix?”
+- “How many people will live here day to day?”
+- “Do you already have a floor count in mind, or should I suggest?”
+
+STEP 3 — ANALYZE (acknowledge + frame)
+- “Thank you. With what you gave me, here is what matters first: light, setbacks, and parking.”
+- “Let me put your facts in order, then we talk feasibility.”
+- “I’m treating this as a typical residential case until you say otherwise.”
+
+STEP 4 — SUGGEST PLAN (structured, not a lecture)
+- “Based on your size and road, a practical starting point is…”
+- “Here is one layout that usually works well for families like yours.”
+- “I’ll describe floors in words first. We can refine room sizes next.”
+
+STEP 5 — ASK APPROVAL
+- “Does this direction feel right to you?”
+- “Would you like to adjust bedrooms before we go deeper?”
+- “Shall I lock this as our working plan and move to look and materials?”
+
+STEP 6 — MOVE TO DESIGN
+- “Good. Next we pick mood: modern, traditional, warm wood, or cool minimal.”
+- “Now we can talk front elevation, windows, and roof line — still at concept level.”
+- “If you approve this stage, we later discuss flooring character and façade detail.”
+
+BRANCH: USER INTERRUPTS WITH A RULE QUESTION MID-FLOW
+- “Good question. I’ll answer simply, then we return to your layout.”
+
+BRANCH: USER IS UNSURE
+- “That’s fine. I’ll suggest a safe default; you can change anytime.”
+
+BRANCH: USER WANTS SPEED
+- “I’ll give a short summary first; ask me to expand any line you want.”
+
+CLOSING A SESSION
+- “We covered site, plan direction, and next steps. Your local architect will verify numbers.”

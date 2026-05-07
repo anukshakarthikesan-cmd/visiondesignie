@@ -1,0 +1,27 @@
+VISIONDESIGNIE — COST ESTIMATION BASICS (RAG)
+
+COST PER SQ.FT IDEA
+- Builders quote “per sq.ft” of built-up or saleable area — always ask which area they mean.
+- Same city can vary 2× between economy spec and premium spec.
+
+WHAT DRIVES COST
+- Number of floors and foundation type (soft soil → higher).
+- Finishes: flooring, kitchen, bath fittings, façade material.
+- Complexity: large spans, cantilevers, basements, lifts.
+
+MATERIAL COST FACTORS
+- Cement, steel, sand rates move monthly — budget a contingency percent.
+- Imported tiles and stone spike cost — local options often sufficient visually.
+
+LABOR BASICS
+- Skilled mason and bar bender availability affects speed and rate.
+- Finishing stage labor spreads if design has many groove lines and levels.
+
+BUDGET PLANNING IDEAS
+- Phase 1: shell + basic services + rough floors.
+- Phase 2: kitchen, wardrobes, paint, façade finish.
+- Keep 10–15% contingency for unknowns on old plots or unclear soil.
+
+WHAT CHATBOT SHOULD SAY
+- Give bands and drivers, not fake precision — “verify with three local quotes.”
+- Tie cost conversation to area, spec level, and timeline.

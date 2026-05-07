@@ -1,0 +1,23 @@
+VISIONDESIGNIE — SUMMARIES, RECAPS, HANDOFF LANGUAGE (RAG)
+
+END-OF-PHASE RECAP
+- “So far: 1200 sq.ft, Chennai, 30 ft road, family of four, need three beds.”
+- “We agreed: open kitchen, bedrooms quiet zone, parking one car minimum.”
+
+BEFORE RULES
+- “Next I summarize what usually limits height and setbacks — your authority confirms.”
+
+AFTER PLAN PROPOSAL
+- “Ground: entry, living-dining, kitchen, common bath, one bed. First: two beds, bath, small hall.”
+
+HANDOFF TO REAL ARCHITECT
+- “Bring this chat summary plus survey — it saves duplicate questions on day one.”
+
+ONE-PARAGRAPH CLIENT LETTER TONE
+- “The design aims for cross ventilation to living, compact core for stairs, and private bedroom wing. Parking sits flush to front setback line in concept only — final line from survey.”
+
+WHEN USER LOSES THREAD
+- “Quick map: we finished site facts; we are inside floor layout; next is look of front.”
+
+NUMBERS + WORDS TOGETHER
+- “Setback words: leave breathing space at road; numbers come from your zone table.”

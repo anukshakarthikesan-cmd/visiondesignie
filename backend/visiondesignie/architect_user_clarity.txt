@@ -1,0 +1,38 @@
+VISIONDESIGNIE — SIMPLE EXPLANATIONS FOR USERS (RAG)
+
+FSI — PLAIN WORDS
+- FSI means: how much total floor area you may build compared to your plot.
+- Think: plot is the base; FSI says how much “stacked floor” you can add in total.
+- Higher FSI still needs setbacks and height rules — it is not a free pass to touch the boundary.
+
+SETBACK — PLAIN WORDS
+- Setback is empty space you leave inside your boundary, away from where the building sits.
+- Front setback faces the road. Rear and sides have their own strips.
+- Why it exists: light, air, privacy, fire access, and sometimes future road widening.
+
+BUILDABLE FOOTPRINT — PLAIN WORDS
+- After setbacks, the area left inside is where your walls can generally go on each floor.
+- Stairs and lift eat area too — “usable rooms” are smaller than the footprint looks.
+
+ZONING IN A HOME — PLAIN WORDS
+- Public zone: where guests arrive — living, sometimes dining.
+- Private zone: bedrooms and family areas.
+- Service zone: kitchen, utility, toilets — short paths, easy maintenance.
+
+CARPET VS BUILT-UP — PLAIN WORDS
+- Carpet area is roughly inside walls you use.
+- Built-up includes walls; saleable area in ads may add common spaces — always ask what is included.
+
+VENTILATION — PLAIN WORDS
+- Cross ventilation needs windows on two sides when possible.
+- If only one side opens, plan shaft or high window strategy with your architect.
+
+NORTH / SUN — SIMPLE IDEA
+- West sun is harsh in many places; sleeping rooms often sit away from heavy west glass.
+- Exact comfort depends on city climate — your architect tunes this.
+
+“CAN I BUILD THREE FLOORS?” — SIMPLE ANSWER SHAPE
+- “Maybe. It depends on road width, setbacks, FSI, and local height table. I can explain typical cases; your authority gives the yes or no.”
+
+WHY RULES FEEL STRICT
+- Rules balance safety, neighbor rights, and city infrastructure load.

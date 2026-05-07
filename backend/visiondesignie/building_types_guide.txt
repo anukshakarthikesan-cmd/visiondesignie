@@ -1,0 +1,36 @@
+VISIONDESIGNIE — BUILDING TYPES (INDIA, RAG)
+
+RESIDENTIAL — 1 BHK
+- One bedroom, hall, kitchen, bath — compact urban format.
+- Needs: clear entry, minimal passage, one good daylight wall for living.
+
+RESIDENTIAL — 2 BHK
+- Two bedrooms, hall, kitchen, usually 1–2 baths — common family flat.
+- Needs: storage, sometimes study corner; parking per norms.
+
+RESIDENTIAL — 3 BHK
+- Three bedrooms — growing family or work-from-home room.
+- Needs: utility, maybe maid bath separate; watch saleable vs carpet area in ads.
+
+APARTMENTS
+- Shared walls, common stairs/lift, fire rules scale with height and occupancy.
+- Needs: service shaft, meter room, refuge/fire rules for tall towers.
+
+VILLAS
+- Low-rise individual home on plot — more façade freedom; setbacks still apply.
+- Needs: landscape, boundary wall, gate sweep, outdoor services.
+
+COMMERCIAL — SHOP / OFFICE
+- Customer path, display, staff area, toilet, storage; parking by use and floor area.
+
+COMMERCIAL — MALL / SUPERMARKET
+- Core placement, escalators, fire exits, loading dock — specialist planning.
+
+SCHOOLS (BASICS)
+- Classrooms with light and ventilation, assembly exits, playground access, labs with safety.
+
+HOSPITALS (BASICS)
+- Zoning: OPD, IPD, diagnostics, infection control — not residential rule set.
+
+CHATBOT USE
+- Match vocabulary to type — don’t apply house setback chat to mall fire exits without context.

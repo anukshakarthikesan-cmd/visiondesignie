@@ -1,0 +1,194 @@
+/* VisionDesignie — two themes only: light (:root) and cosmic (html.theme-cosmic) */
+:root {
+  --bg: #f3efe8;
+  --surface: #ffffff;
+  --surface-2: #ebe8e2;
+  --text: #111111;
+  --muted: #6b6b6b;
+  --border: #e5e5e5;
+  --primary: #1c1c1c;
+  --primary-fg: #ffffff;
+  --primary-hover: #000000;
+
+  --elevated: #f5f2ec;
+  --surface-muted: #ece8e2;
+  --raised: #ffffff;
+  --raised-hover: #ebe8e2;
+  --active-surface: #f0ebe8;
+  --shell-bg: var(--bg);
+  --item-hover: rgba(0, 0, 0, 0.05);
+  --hover: rgba(0, 0, 0, 0.06);
+  --hover-strong: rgba(0, 0, 0, 0.1);
+  --backdrop: rgba(0, 0, 0, 0.35);
+  --scrollbar: rgba(0, 0, 0, 0.15);
+  --shadow-soft: rgba(0, 0, 0, 0.08);
+  --focus-border: #111111;
+  --focus-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+  --focus-ring: rgba(0, 0, 0, 0.12);
+  --error: #b91c1c;
+  --delete-hover: #f87171;
+  --delete-hover-bg: rgba(248, 113, 113, 0.12);
+  --logo-bg: #e8e4dc;
+  --auth-card-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.06),
+    0 24px 48px -12px rgba(0, 0, 0, 0.12);
+  --auth-card-border: rgba(0, 0, 0, 0.06);
+  --architect-card-bg: #f0ebe4;
+  --architect-title: #1a1a1a;
+  --architect-body: #404040;
+  --architect-lead: #262626;
+  --bot-plain-bg: rgba(0, 0, 0, 0.04);
+  --bot-plain-border: rgba(0, 0, 0, 0.08);
+  --typing-bg: rgba(0, 0, 0, 0.06);
+  --composer-spinner-border: rgba(0, 0, 0, 0.12);
+
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+  --code-bg: #f4f3ec;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+html.theme-cosmic {
+  color-scheme: dark;
+  --bg: radial-gradient(circle at center, #1a1f3a, #0b1220);
+  --surface: rgba(11, 18, 32, 0.9);
+  --surface-2: rgba(255, 255, 255, 0.1);
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.6);
+  --border: rgba(255, 255, 255, 0.1);
+  --primary: linear-gradient(90deg, #00c6ff, #8e2de2);
+  --primary-fg: #ffffff;
+  --primary-hover: linear-gradient(90deg, #00c6ff, #8e2de2);
+
+  --elevated: #2f2f2f;
+  --surface-muted: rgba(255, 255, 255, 0.06);
+  --raised: #212121;
+  --raised-hover: #2a2a2a;
+  --active-surface: #2a2a2a;
+  --shell-bg: transparent;
+  --item-hover: rgba(255, 255, 255, 0.05);
+  --hover: rgba(255, 255, 255, 0.06);
+  --hover-strong: rgba(255, 255, 255, 0.1);
+  --backdrop: rgba(0, 0, 0, 0.45);
+  --scrollbar: rgba(255, 255, 255, 0.12);
+  --shadow-soft: rgba(0, 0, 0, 0.25);
+  --focus-border: rgba(255, 255, 255, 0.35);
+  --focus-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+  --focus-ring: rgba(255, 255, 255, 0.15);
+  --error: #fca5a5;
+  --delete-hover: #f87171;
+  --delete-hover-bg: rgba(248, 113, 113, 0.12);
+  --logo-bg: #0d0d0d;
+  --auth-card-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 24px 64px rgba(0, 0, 0, 0.45);
+  --auth-card-border: rgba(255, 255, 255, 0.1);
+  --architect-card-bg: #2f2f2f;
+  --architect-title: #f5f5f5;
+  --architect-body: #d4d4d4;
+  --architect-lead: #ececec;
+  --bot-plain-bg: rgba(255, 255, 255, 0.06);
+  --bot-plain-border: rgba(255, 255, 255, 0.08);
+  --typing-bg: rgba(255, 255, 255, 0.08);
+  --composer-spinner-border: rgba(255, 255, 255, 0.2);
+  --code-bg: #1f2028;
+}
+
+*,
+*::before,
+*::after {
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: initial;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: transparent;
+  color: inherit;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

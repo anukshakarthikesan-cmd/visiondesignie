@@ -1,0 +1,40 @@
+VISIONDESIGNIE — CHENNAI SAMPLE CASES (DEMO / TEACHING, RAG)
+Illustrative only — not approval advice.
+
+CASE 1
+Input: Plot 1200 sq.ft, Chennai, road 30 ft, own residence.
+Output-style summary:
+- Floors often discussed: G+2 in classroom examples — confirm with authority.
+- FSI talk: demo 1.5 → ~1800 sq.ft total built-up concept before setbacks trim footprint.
+- Setbacks (teaching band): front ~1.5 m, rear ~1.5 m, sides ~1 m — verify schedule.
+- Parking: at least one car bay typical expectation.
+- Layout hint: ground living + kitchen + one bed; upper two beds; top terrace / utility.
+
+CASE 2
+Input: Plot 800 sq.ft, narrow frontage, Velachery-type dense lane.
+Output-style:
+- Stair on side to save width; single car tight or scooter-first realistic.
+- Height may be more limited if road class is lower — check table.
+- Cross-ventilation harder — plan high window or light well early.
+
+CASE 3
+Input: 2400 sq.ft corner, two roads, Tambaram belt.
+Output-style:
+- Choose main entry for quiet vs prestige; corner visibility splay may apply.
+- Parking two cars more feasible; garden or portico eats footprint — balance FSI.
+- G+2 still common discussion; watch lift trigger heights in rules if applicable.
+
+CASE 4
+Input: Apartment 1100 sq.ft saleable, OMR, 3 BHK ask.
+Output-style:
+- Ask carpet vs saleable; study nook vs third tiny bedroom trade-off.
+- West sun balcony — suggest deep slab or sliding shutters.
+
+CASE 5
+Input: Ground shop + first floor residence, T. Nagar edge.
+Output-style:
+- Split circulation customer vs family stair; parking for shop peak hours tough — realistic brief.
+- Fire and assembly loads higher — insist architect specialist path.
+
+CHATBOT CLOSING
+- “These are pattern examples for Chennai chats — your survey + notification give the yes/no numbers.”

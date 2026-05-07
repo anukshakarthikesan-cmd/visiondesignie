@@ -1,0 +1,99 @@
+VISIONDESIGNIE — FULL RAG CORPUS CHECKLIST & DATA SOURCES (INDIA)
+Use this as a master list of what to ingest later. Tag each PDF with: region,
+authority, year, and “superseded?” flag.
+
+--------------------------------------------------------------------------------
+A — STATUTORY & REGULATORY (HIGH PRIORITY)
+--------------------------------------------------------------------------------
+- National Building Code of India (latest published parts) — fire, life safety,
+  accessibility, plumbing, electrical coordination.
+- Local Development Control Regulations (DCR) for target cities:
+  CMDA / DTCP Tamil Nadu, BBMP/BDA Karnataka, MCGM Maharashtra, GHMC Telangana,
+  NDMC/SDMC Delhi variants, etc.
+- Town and country planning acts summaries — only official PDFs or gazettes.
+- Coastal regulation, airport funnel height, heritage precinct overlays where relevant.
+
+--------------------------------------------------------------------------------
+B — PROFESSIONAL GOVERNANCE
+--------------------------------------------------------------------------------
+- Council of Architecture (COA) public documents on practice and education.
+- Architect’s Act context — what only registered architects may certify.
+
+--------------------------------------------------------------------------------
+C — STRUCTURAL & SAFETY (REFERENCE, NOT DIY)
+--------------------------------------------------------------------------------
+- IS codes (earthquake wind loads) — store for RAG explanations; always defer final
+  design to licensed structural engineer.
+- Fire NOC pathways for high-rise and assembly occupancies — high-level process text.
+
+--------------------------------------------------------------------------------
+D — SERVICES
+--------------------------------------------------------------------------------
+- NBC service chapters summaries: water supply, drainage, rainwater harvesting.
+- Basic electrical safety concepts: earthing, ELCB, generator norms — from standards.
+
+--------------------------------------------------------------------------------
+E — SUSTAINABILITY & GREEN
+--------------------------------------------------------------------------------
+- ECBC / state energy codes summaries.
+- IGBC/GRIHA overview documents — certification criteria at high level.
+
+--------------------------------------------------------------------------------
+F — TYPOLOGY PACKS (USER QUERIES)
+--------------------------------------------------------------------------------
+- Residential: plotted housing, apartments 1–4 BHK, villas, row houses.
+- Institutional: schools, colleges, hospitals, labs.
+- Commercial: retail shops, malls, supermarkets, restaurants, hotels, banquet halls,
+  theatres, banks, co-working.
+- Industrial & warehouses: basic separation and fire notes only with official texts.
+
+--------------------------------------------------------------------------------
+G — PLANNING & DESIGN KNOWLEDGE
+--------------------------------------------------------------------------------
+- Space planning: zoning, circulation, privacy, daylight, ventilation.
+- Anthropometrics and furniture planning — standard textbooks (Ching, Neufert summaries
+  you have rights to use).
+- Materials and construction methods — lecture notes you own or open textbooks.
+- Famous architects and case studies — short factual bios and project descriptions
+  you are allowed to republish.
+
+--------------------------------------------------------------------------------
+H — REGIONAL & SITE CONTEXT
+--------------------------------------------------------------------------------
+- Climate zones of India — hot-dry, warm-humid, composite — orientation tips.
+- Soil and contour: only generic education content unless you have site reports.
+
+--------------------------------------------------------------------------------
+I — VASTU & CULTURAL (OPTIONAL LAYER)
+--------------------------------------------------------------------------------
+- Treat as client preference layer; ingest only sources you have license to use.
+- Never claim legal compliance from vastu chat alone.
+
+--------------------------------------------------------------------------------
+J — DATA TYPES TO COLLECT
+--------------------------------------------------------------------------------
+- Official PDF circulars, approved handbooks, sanctioned zoning maps (where open).
+- Your own lecture notes, assignments, studio sheets (you own copyright).
+- Licensed stock plan catalogs only if license allows embedding.
+- Avoid pirated scans of paid books.
+
+--------------------------------------------------------------------------------
+K — WHERE TO LOOK (STARTING POINTS)
+--------------------------------------------------------------------------------
+- Government portals: TCP departments, urban local bodies, publication sections.
+- BIS portal for standards catalog (purchase or library access).
+- COA website for public notices.
+- University open courseware (check license).
+- Publisher sites for architecture textbooks (purchase digital where allowed).
+
+--------------------------------------------------------------------------------
+L — METADATA TO STORE PER DOCUMENT
+--------------------------------------------------------------------------------
+- title, authority, region, year, language, page_range, topic_tags[], reliability_tier
+  (official / textbook / internal_note).
+
+--------------------------------------------------------------------------------
+M — CHUNKING STRATEGY FOR PRODUCTION
+--------------------------------------------------------------------------------
+- Chunk by section headings in NBC/DCR; keep tables intact or duplicate headers.
+- Store “effective date” in metadata for retrieval ranking.

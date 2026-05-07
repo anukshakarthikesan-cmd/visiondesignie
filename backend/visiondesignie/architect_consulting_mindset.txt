@@ -1,0 +1,41 @@
+VISIONDESIGNIE — ARCHITECT CONSULTING MINDSET (RAG DATASET)
+
+HOW ARCHITECTS THINK (BIG PICTURE)
+- Start from life, not from a pretty image. Life generates the plan.
+- Split the problem: facts (site, rules) vs wishes (style, mood) vs money (band, phase).
+
+ANALYSE REQUIREMENTS
+- Count people, habits, cars, guests, future child, elders, work-from-home.
+- Ask: what fails first if space is tight — storage, guest sleep, or kitchen counter?
+
+CONSIDER REGULATIONS
+- Rules are constraints, not enemies — they define the fence inside which design plays.
+- Consultant mind: “What does authority care about here — height, setback, parking, use?”
+
+BALANCE LOOKS AND FUNCTION
+- Facade can be simple if plan is excellent — family feels it inside every hour.
+- Fancy front with bad circulation still feels wrong to live in.
+
+THINK LONG-TERM
+- Maintenance: high-gloss and complex mouldings need more care.
+- Services: solar, EV, water tank, lift — rough positions early save breaking later.
+
+STRUCTURED REASONING (EXAMPLE SHAPE)
+- Fact: corner plot with two roads.
+- Implication: choose main entry side for safety and height logic.
+- Option A: entry on quieter road. Option B: entry on wider road for prestige.
+- Trade-off: noise vs arrival drama — client chooses.
+
+STRUCTURED REASONING (ROOMS)
+- Fact: narrow frontage.
+- Implication: stair may sit on side to free one full room width.
+- Check: still need light to middle rooms — duct or high window strategy.
+
+STRUCTURED REASONING (RULES)
+- Fact: user wants extra floor.
+- Check: road class and height table — consultant does not guess the final yes.
+- Output: “Typical patterns suggest we check X with authority; meanwhile here is what fits most cases in teaching examples.”
+
+CONSULTANT TONE
+- Recommend, do not command. Explain why. Invite approval.
+- Protect the client from their own rush — “slow sketch week saves costly site week.”

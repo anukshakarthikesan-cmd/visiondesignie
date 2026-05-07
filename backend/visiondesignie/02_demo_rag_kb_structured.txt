@@ -1,0 +1,109 @@
+VISIONDESIGNIE — DEMO RAG KNOWLEDGE BASE (STRUCTURED, CHENNAI-ORIENTED)
+Purpose: Small, professional corpus for embeddings or prompt injection.
+Note: Illustrative summaries for demos — verify against official notifications.
+
+--------------------------------------------------------------------------------
+SECTION A — PLOT SIZE CATEGORIES (DEMO LOGIC)
+--------------------------------------------------------------------------------
+Small plot: under 600 sq.ft — tighter setbacks and height limits often apply.
+Medium plot: 600 to 2400 sq.ft — typical individual house range in urban demos.
+Large plot: above 2400 sq.ft — may allow more footprint flexibility; still FSI-bound.
+
+--------------------------------------------------------------------------------
+SECTION B — FSI (FLOOR SPACE INDEX) — RESIDENTIAL DEMO
+--------------------------------------------------------------------------------
+Floor Space Index is the ratio of total permissible built-up area to plot area.
+Demo residential assumption for Chennai-style narrative: FSI = 1.5.
+Formula (demo): max built-up ≈ plot area × FSI.
+Example: plot 1200 sq.ft × 1.5 = 1800 sq.ft maximum built-up (all floors combined),
+subject to setbacks, height, road width, and authority rules.
+
+--------------------------------------------------------------------------------
+SECTION C — SETBACKS (APPROXIMATE DEMO, MEDIUM PLOTS)
+--------------------------------------------------------------------------------
+For plots roughly 1000–1500 sq.ft in dense urban context (illustrative):
+Front setback toward main road: about 1.5 m.
+Rear setback: about 1.5 m.
+Side setbacks: about 1 m each.
+Purposes: light, ventilation, fire access, privacy.
+Corner plots: extra setback may be required on additional road-facing sides.
+
+--------------------------------------------------------------------------------
+SECTION D — HEIGHT & NUMBER OF FLOORS (DEMO HEURISTIC)
+--------------------------------------------------------------------------------
+Allowed height and floors depend on: road width, plot size, FSI, zone, and approval.
+Demo example: 1200 sq.ft plot with 30 ft road — narrative often allows G+2
+(Ground plus two upper floors) if built-up fits within FSI after setbacks.
+Taller buildings need stair/lift/fire rules per NBC and local codes.
+
+--------------------------------------------------------------------------------
+SECTION E — PARKING (DEMO)
+--------------------------------------------------------------------------------
+Individual houses above ~100 sq.m often need at least one car parking space.
+Typical minimum stall size (order of magnitude): 2.5 m × 5 m.
+Apartments: commonly one parking space per dwelling unit unless authority specifies
+differently for small units.
+
+--------------------------------------------------------------------------------
+SECTION F — MINIMUM ROOM SIZES (PRACTICE GUIDE, NOT A LEGAL SUBSTITUTE)
+--------------------------------------------------------------------------------
+Living room: about 10 ft × 12 ft minimum comfortable span for small homes.
+Bedroom: about 10 ft × 10 ft minimum for one bed and wardrobe.
+Kitchen: about 8 ft × 6 ft workable galley or L-shape start.
+Bathroom: about 4 ft × 7 ft for WC + shower in compact plans.
+Staircase: about 3 ft clear width minimum for residential comfort (verify code).
+
+--------------------------------------------------------------------------------
+SECTION G — SPACE PLANNING ZONES
+--------------------------------------------------------------------------------
+Public zone: living, entry, sometimes dining visible from entrance.
+Private zone: bedrooms, family areas away from main door line of sight.
+Service zone: kitchen, utility, toilets; keep toilet doors not facing dining directly
+when possible. Cross-ventilation preferred for living and bedrooms.
+
+--------------------------------------------------------------------------------
+SECTION H — BHK SHORTHAND (USER-FRIENDLY)
+--------------------------------------------------------------------------------
+1 BHK: one bedroom, hall, kitchen — compact urban apartments.
+2 BHK: two bedrooms — common family format.
+3 BHK: three bedrooms — growing family or work-from-home room.
+4 BHK: four bedrooms — luxury or multi-generational; check carpet vs saleable area.
+
+--------------------------------------------------------------------------------
+SECTION I — SAMPLE INPUT → STRUCTURED OUTPUT (DEMO SHOWCASE)
+--------------------------------------------------------------------------------
+User inputs:
+Plot size: 1200 sq.ft
+Location: Chennai
+Road width: 30 ft
+
+Structured output:
+Allowed floors: G+2 plausible subject to final sanction.
+FSI (demo): 1.5 → approximate max built-up 1800 sq.ft total.
+Setbacks (demo band): front ~1.5 m, rear ~1.5 m, sides ~1 m.
+Parking: at least 1 car space typically expected.
+Suggested plan (text):
+Ground: living, kitchen, one bedroom, common bath.
+First: two bedrooms, bath, small study nook.
+Second: terrace / utility / optional small room if within FSI.
+
+--------------------------------------------------------------------------------
+SECTION J — FAQ (RETRIEVAL-FRIENDLY)
+--------------------------------------------------------------------------------
+Q: What is FSI?
+A: Ratio of permissible built-up floor area to plot area; higher FSI allows more
+   floor plate if setbacks and height allow.
+
+Q: What is setback?
+A: Mandatory open strip between building line and site boundary for safety and light.
+
+Q: Can I build three full floors on 1200 sq.ft in Chennai?
+A: Often discussed as G+2; exact approval depends on road width, zone, and current
+   development control rules — confirm with CMDA/consultant.
+
+Q: Is parking mandatory?
+A: Usually yes for car-owning households in plotted and many apartment norms.
+
+Q: What about earthquake or wind?
+A: NBC and IS codes govern structural design; a structural engineer must design and
+   certify — not inferred from chat alone.

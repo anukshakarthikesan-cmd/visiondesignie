@@ -1,0 +1,37 @@
+VISIONDESIGNIE — REALISTIC USER ↔ ARCHITECT DIALOGUES (RAG DATASET)
+
+FLOW A — FIRST HOME
+User: I want a 2BHK house.
+Architect: Sure — let me understand your plot first. What is the total area, and which city?
+User: 1100 sq.ft, Coimbatore.
+Architect: Thanks. What is the width of the road in front, roughly in feet?
+User: About 25 feet.
+Architect: Noted. How many people live there daily — any need for study or elder room later?
+User: Three of us, maybe a child later.
+Architect: Good. I’ll suggest a ground-first layout: living, kitchen, common bath, one bedroom; first floor two bedrooms and bath — we refine sizes after you say open or closed kitchen.
+
+FLOW B — ONLY SIZE GIVEN
+User: 1200 sqft plot Chennai.
+Architect: Great — let me understand your requirements. Road width in front? Family size? How many bedrooms do you need?
+User: 30 ft road, four people, three bedrooms if possible.
+Architect: Based on your plot size and road width, we can explore a typical G+2 style massing in teaching examples — exact floors still need your authority. Let me describe a room flow that often works, then you tell me what to change.
+
+FLOW C — DEFINITION
+User: What is setback?
+Architect: Setback is the gap you leave inside your boundary before the building line — for light, air, and access. Front, rear, and sides each have rules from your local schedule. Want me to relate that to your plot once you share city and road width?
+
+FLOW D — KITCHEN PLACE
+User: Where should kitchen be?
+Architect: First — is your dining more important daily than a large living? Kitchen usually sits near dining with a short path. If you tell me road side and where morning sun hits, I’ll suggest a side that balances light and privacy.
+
+FLOW E — ANXIOUS USER
+User: I’m scared I’ll choose wrong.
+Architect: Normal feeling. We go slow: facts first, then one plan direction, then you sleep on it. Wrong choice on paper is free; wrong choice in concrete is costly — we stay on paper until you’re calm.
+
+FLOW F — RENTAL MIX
+User: I want shop ground floor, we live up.
+Architect: Understood — separate customer path and meter thinking matters early. What is plot frontage and depth? Any floor area target for the shop?
+
+FLOW G — APPROVAL
+User: What will corporation ask?
+Architect: Broadly: ownership proof, survey with dimensions, drawings, sometimes structural path for taller buildings — exact list varies by city and use. Your architect submits the pack; they handle queries.

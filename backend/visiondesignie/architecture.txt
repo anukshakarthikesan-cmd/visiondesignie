@@ -1,0 +1,113 @@
+VISIONDESIGNIE — CORE ARCHITECTURE DATASET (CHENNAI / TAMIL NADU DEMO)
+Use as teaching-style context. Final numbers always come from survey + local authority + architect.
+
+SECTION: FSI AND BUILT-UP (RESIDENTIAL, DEMO)
+- FSI (Floor Space Index): ratio of total permissible built-up floor area to plot area.
+- Typical classroom value for Chennai-style residential chat: 1.5 (illustrative only).
+- Example: plot 1200 sq.ft × 1.5 ≈ 1800 sq.ft total built-up across all floors if rules allow.
+- Setbacks and height still limit footprint — you cannot always use full FSI on every floor plate.
+- Built-up is not the same as saleable or carpet area in apartment ads.
+
+SECTION: SETBACKS (APPROXIMATE DEMO, MEDIUM PLOTS)
+- For plots roughly 1000–1500 sq.ft (teaching band): front ~1.5 m, rear ~1.5 m, sides ~1 m each.
+- Purpose: light, ventilation, fire access, privacy, sometimes future road reserve.
+- Corner plots: extra margin or splay on second road front — confirm on site plan.
+- Measure from legal boundary in survey, not from neighbour’s compound guess.
+
+SECTION: ROAD WIDTH AND HEIGHT / FLOORS
+- Wider front roads often support better access and more height in authority tables.
+- Example often used in demos: 1200 sq.ft + 30 ft road → discussion of G+2 (Ground + 2 upper).
+- Narrow lanes may cap storeys even when FSI math looks generous.
+- Lift, refuge, and fire rules increase for taller apartments — not the same as small houses.
+
+SECTION: PARKING
+- Many norms expect at least one car space for individual houses above common size thresholds.
+- Typical planning bay size order: ~2.5 m × 5 m (starting point before detailed layout).
+- Apartments: often one slot per unit in planning talk; visitor parking varies by project class.
+- Stilt parking: counts in massing and access design — slope and turning at gate matter.
+
+SECTION: ROOM SIZE GUIDES (COMFORT, NOT LEGAL SUBSTITUTE)
+- Living: about 10 × 12 ft minimum comfortable for small Indian homes.
+- Bedroom: about 10 × 10 ft for one bed + wardrobe start point.
+- Kitchen: about 8 × 6 ft workable galley or L-shape.
+- Bathroom: about 4 × 7 ft for compact WC + shower.
+- Stair: about 3 ft clear width common residential target; uniform riser height for safety.
+
+SECTION: ZONING AND FLOW
+- Public zone: living, entry, guest path.
+- Private zone: bedrooms, family areas away from main door line.
+- Service zone: kitchen, utility, toilets — short paths, easy maintenance.
+- Kitchen near dining; common toilet reachable without walking through bedrooms.
+- Cross-ventilation when two opposite sides open; Chennai heat favours shade on harsh west.
+
+SECTION: BHK SHORTHAND
+- 1 BHK: one bedroom, hall, kitchen — compact flats.
+- 2 BHK: two bedrooms — common family format.
+- 3 BHK: third room for child, guest, or study — check carpet vs saleable in brochures.
+
+SECTION: CMDA AND APPROVALS (HIGH LEVEL)
+- CMDA: development control for Chennai metro limits — setbacks, height, parking, use.
+- Process: measured site + drawings + structural path when required → submission → queries → sanction.
+- Build to match sanctioned plan; changes need revision drawings.
+
+SECTION: NBC (BIG PICTURE)
+- National Building Code: minimum thinking for fire, life safety, accessibility, services.
+- Local body applies NBC through checklists; tall and crowded buildings face stricter rules.
+
+SECTION: STRUCTURE AND SAFETY
+- RCC frame with brick or AAC infill is typical urban TN practice.
+- Structural design and soil must be signed off by qualified engineer — not guessed from chat.
+
+SECTION: CHENNAI CLIMATE
+- Hot and humid long season: favour cross-ventilation, roof insulation, west sun control.
+- Monsoon: terrace waterproofing, balcony drips, ground plinth and site drainage matter.
+
+SECTION: VASTU (CONVERSATION LAYER, TN)
+- Many clients ask southeast kitchen, southwest master, northeast pooja — blend with light and structure.
+- Treat as family preference unless they bring a dedicated vastu advisor.
+
+SECTION: MATERIALS (PRACTICAL)
+- Vitrified floors, anti-skid wet areas, UPVC windows common; good waterproofing pays back fast.
+
+SECTION: DEMO CASE (FULL)
+
+Input:
+Plot: 1200 sq.ft
+Location: Chennai
+Road width: 30 ft
+Use: Own residence
+
+Output-style summary:
+- Floors (demo talk): G+2 often discussed — verify with CMDA schedule.
+- FSI (demo): 1.5 → ~1800 sq.ft total built-up concept before setbacks trim footprint.
+- Setbacks (demo band): front/rear ~1.5 m, sides ~1 m — verify survey.
+- Parking: at least one car typical expectation.
+- Suggested layout (text):
+  Ground: living, kitchen, one bedroom, common bath.
+  First: two bedrooms, bath, small circulation.
+  Second: terrace / utility / optional small room if within FSI and height.
+
+SECTION: MORE FAQ
+
+Q: What is FSI?
+A: It scales how much total floor area you may build relative to plot size; setbacks and height still apply.
+
+Q: What is setback?
+A: Mandatory open strip inside your boundary before the building line — for safety and light.
+
+Q: Can I build three full floors?
+A: Often discussed as G+2 for houses; exact approval depends on road class, zone, and current notification.
+
+Q: What is carpet area?
+A: Roughly usable floor inside walls; saleable area in ads may add common walls and amenities.
+
+Q: Do I need an architect on record?
+A: For sanctioned drawings and many submissions, yes — Council of Architecture governs use of title architect in India.
+
+Q: Is parking mandatory?
+A: Often yes for car-owning households in plotted housing and many apartment norms — confirm locally.
+
+SECTION: ARCHITECT CHATBOT BEHAVIOUR
+- Ask plot size, location, road width, family size, bedroom count before locking a plan.
+- Give structured bullets and options; explain trade-offs in plain English.
+- Say when numbers are illustrative; send users to licensed architect + authority for binding compliance.

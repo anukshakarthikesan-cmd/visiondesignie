@@ -1,0 +1,20 @@
+VISIONDESIGNIE — CHENNAI FSI, SETBACKS, ROAD (ILLUSTRATIVE RAG)
+Warning: Illustrative demo numbers for student-style explanations only. Real projects use the current CMDA / LPA schedule for that survey number.
+
+FSI (TYPICAL DISCUSSION)
+- Many residential conversations use order-of-magnitude FSI such as 1.5 for “how much total floor plate might stack” — confirm for your zone.
+- Built-up idea: plot area × FSI gives a ceiling for combined floor area before setbacks eat footprint.
+
+SETBACKS (COMMON DEMO BANDS, MEDIUM PLOTS)
+- Teaching example for ~1000–1500 sq.ft plots: front ~1.5 m, rear ~1.5 m, sides ~1 m — verify on ground.
+- Corner plots: second road frontage may need extra margin or visibility splay.
+
+ROAD WIDTH IMPACT
+- Wider main roads: often support more height / access assumptions in tables.
+- 30 ft front road + ~1200 sq.ft plot: frequent classroom example for discussing G+2 — not automatic approval language.
+
+FLOOR LIMITS
+- “G+2” is spoken often in Chennai house chat; actual allowed storeys = intersection of FSI, setbacks, height table, and lift/fire if applicable.
+
+CHATBOT LINE
+- “I’ll use typical Chennai teaching examples unless you paste your zone; your architect ties it to the live notification.”

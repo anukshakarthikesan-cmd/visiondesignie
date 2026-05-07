@@ -1,0 +1,39 @@
+VISIONDESIGNIE — REALISTIC USER QUERIES (RAG DATASET)
+
+SITE AND RULES
+- “I have a 1200 sq.ft plot — what can I build?”
+- “How many floors can I construct on my land?”
+- “What is setback? Why do I have to leave empty space?”
+- “What is FSI in simple words?”
+- “Does road width change how tall I can build?”
+- “Corner plot — is it better or more rules?”
+- “CMDA approval — what papers do people usually need?”
+
+LAYOUT AND ROOMS
+- “Where should the kitchen be placed?”
+- “Should living room be in front or back?”
+- “I want 2BHK — is that possible on my size?”
+- “Master bedroom with attached bath — how much space?”
+- “Open kitchen or closed — which is better for Indian cooking?”
+- “Where should stairs go — middle or side?”
+- “I need a small pooja space — where does it fit?”
+
+COMFORT AND CLIMATE
+- “Which side should bedrooms avoid in Chennai heat?”
+- “How do I get cross ventilation if plot is narrow?”
+
+PARKING AND SERVICES
+- “How many car parks do I need?”
+- “Stilt parking — does it change floor count rules?”
+
+COST AND PROCESS
+- “Rough idea only — what drives cost most?”
+- “Can I build ground for rent and live upstairs?”
+- “How long does plan approval take — ballpark?”
+
+FEAR AND TRUST
+- “I don’t know anything — where do I start?”
+- “Neighbor built more floors — why can’t I?”
+
+STYLE
+- “I want modern but not cold — how do we say that to a builder?”

@@ -1,0 +1,35 @@
+VISIONDESIGNIE — DESIGN GUIDANCE (THEMES, MATERIALS, ELEVATION) RAG
+
+THEMES (CONVERSATION STARTERS)
+- “Do you lean modern clean lines, or traditional roof and mouldings?”
+- “Warm palette uses wood tones and off-white; cool palette uses grey and glass accents.”
+- “Minimal means fewer grooves; classic means cornices and defined windows.”
+
+MATERIALS — FACADE
+- “Textured paint is economical; stone cladding is selective — best on one feature wall.”
+- “Brick jaali gives shade and pattern; it needs cleaning access.”
+- “UPVC windows are common; wood look needs maintenance in humid coast cities.”
+
+MATERIALS — INTERIOR
+- “Flooring: vitrified tiles are durable; wood finish tiles give warmth without full wood cost.”
+- “Kitchen: quartz or granite counters; backsplash tile for easy wipe.”
+- “Ceiling: simple flat with cove light is calm; false ceiling drops height — use where slab is high.”
+
+INTERIOR IDEAS
+- “Keep circulation straight — fewer corners make furniture placement easy.”
+- “Built-in wardrobes save 6–8 inches versus loose furniture in tight rooms.”
+- “Study nook by a window is pleasant if sun is not harsh.”
+
+ELEVATION IDEAS
+- “Rhythm wins: repeat window widths; one strong vertical or horizontal band ties the face.”
+- “Parapet height and railing detail change the whole silhouette.”
+- “Canopy over entry is practical rain cover and a visual anchor.”
+
+LIGHTING MOOD
+- “Warm 3000K for living and bedrooms; slightly cooler for kitchen task areas.”
+
+SUSTAINABILITY NUDGES
+- “Rainwater recharge and shaded west wall are low-cost comfort moves.”
+
+WHEN USER HAS NO OPINION
+- “I suggest a calm modern base: light façade, darker accents only at porch and sill.”

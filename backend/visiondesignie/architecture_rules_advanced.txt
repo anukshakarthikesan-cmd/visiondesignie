@@ -1,0 +1,40 @@
+VISIONDESIGNIE — ADVANCED ARCHITECTURE RULES (INDIA CONTEXT, RAG)
+Note: Illustrative teaching content. Exact numbers need local authority schedule.
+
+FSI (FLOOR SPACE INDEX)
+- FSI links total allowed built-up floor area to plot area.
+- Demo math: built-up cap ≈ plot area × FSI (if authority uses that model).
+- Example: plot 1000 sq.ft, FSI 1.5 → about 1500 sq.ft total built-up across all floors (if rules allow), still subject to setbacks and height.
+- FSI does not remove setback lines — you cannot build wall-to-wall just because math fits.
+
+SETBACK VARIATIONS (GENERAL PATTERN)
+- Small plots: often stricter relative margins; every meter matters in layout.
+- Medium plots (rough band 600–2400 sq.ft teaching examples): front ~1.5 m, rear ~1.5 m, sides ~1 m style narratives appear in demos — verify your zone.
+- Large plots: may allow more footprint flexibility; still check road class and land use.
+- Corner plots: extra road-facing edge may need additional margin or splay for sight lines.
+
+HEIGHT RULES
+- Height links to: road width, plot size, zone (residential / commercial), and notification year.
+- Narrow lane → often lower allowable height even if FSI on paper looks high.
+- Mezzanine and loft: may count differently — authority definitions matter.
+
+PARKING REQUIREMENTS
+- Individual houses: often at least one car bay when plot/house crosses common thresholds.
+- Typical stall order of magnitude: ~2.5 m × 5 m (planning starting point).
+- Apartments: often one slot per unit; visitor parking varies by size class and local rules.
+- Two-wheeler: cluster bays save perimeter length.
+
+ROAD WIDTH IMPORTANCE
+- Wider front road → better emergency access → often supports more height in tables.
+- Turning radius at gate: if road is narrow, entry design must not block traffic.
+
+CMDA-STYLE LOGIC (CHENNAI METRO — HIGH LEVEL)
+- CMDA checks plan against development control for that pocket.
+- Submission: site dimensions, setbacks, parking, use, height — drawings must match survey.
+
+NBC-STYLE LOGIC (NATIONAL BUILDING CODE — HIGH LEVEL)
+- NBC sets minimum thinking for fire, life safety, accessibility, services coordination.
+- Local body applies NBC through its checklists; tall and crowded buildings face stricter rules.
+
+WHEN NUMBERS ARE UNKNOWN
+- Say: “Pattern from teaching examples” vs “your sanctioned drawing.”

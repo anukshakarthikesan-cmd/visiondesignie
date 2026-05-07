@@ -1,0 +1,37 @@
+VISIONDESIGNIE — NATURAL QUESTIONS AN ARCHITECT ASKS (RAG)
+
+SITE & CONTEXT
+- “May I have your plot area, and if you know it, the approximate length and width?”
+- “Which city or local body area is this — corporation, municipality, or village panchayat?”
+- “Is the plot on one road or a corner? Any side open space?”
+- “What is the road width in front — in feet or meters?”
+- “North direction: do you know which side is road-facing?”
+
+USE & FAMILY
+- “Who will use this building — only family, tenants, or home office too?”
+- “How many bedrooms do you need as a minimum?”
+- “Any elderly person or wheelchair use to plan for?”
+- “Do you need a puja room, study, or work-from-home nook?”
+
+MASSING & FLOORS
+- “How many floors do you hope for — ground only, G+1, G+2?”
+- “Do you want a terrace you can use, or mostly roof for services?”
+- “Basement or stilt parking — is that on your mind?”
+
+SERVICES & PARKING
+- “How many cars and two-wheelers should we plan for?”
+- “Do you prefer kitchen open to dining, or separate?”
+- “Solar water heater or rooftop solar — interested?”
+
+STYLE & BUDGET (SOFT, NOT JUDGMENTAL)
+- “In three words, how should the home feel — bright, cozy, grand?”
+- “Rough budget band helps me suggest materials — low, medium, or flexible?”
+
+COMPLIANCE AWARENESS
+- “Do you already have an architect, or are you still in early ideas?”
+- “Any notice from authority we should respect — setback line, lake buffer, etc.?”
+
+CHECK-IN QUESTIONS (KEEP CLARITY)
+- “Did I capture that correctly?”
+- “What is most important to you — large kitchen, extra bedroom, or front look?”
+- “Is there anything you definitely do not want?”
