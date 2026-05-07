@@ -5,15 +5,22 @@ Follow these steps in order.
 ## STEP 1 -> GitHub setup
 
 1. Open terminal at `rag-chatbot`.
-2. Initialize git if needed:
+2. Install Git LFS once on your machine (required for FAISS files):
+   - `git lfs install`
+3. Initialize git if needed:
    - `git init`
    - `git add .`
    - `git commit -m "prepare deployment setup"`
-3. Create a GitHub repo (for example `visiondesignie`).
-4. Connect local repo and push:
+4. Create a GitHub repo (for example `visiondesignie`).
+5. Connect local repo and push:
    - `git remote add origin https://github.com/<your-username>/visiondesignie.git`
    - `git branch -M main`
    - `git push -u origin main`
+
+Notes:
+- If `remote origin already exists`, use:
+  - `git remote set-url origin https://github.com/<your-username>/visiondesignie.git`
+- If `git` is not recognized on Windows, install Git and reopen terminal.
 
 ## STEP 2 -> Backend deployment (Render)
 
@@ -40,7 +47,7 @@ Follow these steps in order.
 
 Notes:
 - This repo includes `render.yaml` with matching defaults.
-- Make sure `backend/data/vector_store/index.faiss` and `index.pkl` are committed to GitHub.
+- Make sure `backend/data/vector_store/index.faiss` and `index.pkl` are committed to GitHub (LFS upload succeeds).
 
 ## STEP 3 -> Backend testing
 
@@ -77,7 +84,7 @@ After Render deploy completes:
 
 Notes:
 - `frontend/vercel.json` already adds SPA rewrite to `index.html`.
-- Use `frontend/.env.production.example` as variable reference.
+- Use `frontend/.env.example` and `frontend/.env.production.example` as variable references.
 
 ## STEP 5 -> Frontend-backend connection
 
@@ -118,6 +125,7 @@ Run this checklist:
 
 3. **FAISS load error (`Vector store not found`)**
    - Ensure `backend/data/vector_store/index.faiss` and `index.pkl` are in GitHub.
+   - Ensure Git LFS objects were uploaded successfully during push.
    - Redeploy after pushing those files.
 
 4. **Frontend cannot call backend**
