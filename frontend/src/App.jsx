@@ -20,6 +20,23 @@ const readStoredTheme = () => {
   }
 };
 
+/** Avoid infinite "Loading…" if Supabase `profiles` never returns (RLS, network, misconfig). */
+const PROFILE_LOAD_TIMEOUT_MS = 8000;
+
+async function loadProfileWithTimeout(loadProfile, userId) {
+  return Promise.race([
+    loadProfile(userId),
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.warn(
+          `profiles fetch exceeded ${PROFILE_LOAD_TIMEOUT_MS}ms; continuing without onboarding flags`
+        );
+        resolve(null);
+      }, PROFILE_LOAD_TIMEOUT_MS);
+    }),
+  ]);
+}
+
 function App() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState(readStoredTheme);
@@ -207,7 +224,7 @@ function App() {
         if (!s?.user) {
           setStep("auth");
         } else {
-          const profile = await loadProfile(s.user.id);
+          const profile = await loadProfileWithTimeout(loadProfile, s.user.id);
           setStep(
             profile?.onboarding_role?.trim() ? "chat" : "intro"
           );
@@ -228,6 +245,19 @@ function App() {
 
     const init = async () => {
       try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
+        const supabaseAnon = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
+        if (!supabaseUrl || !supabaseAnon) {
+          console.error(
+            "Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY — set them in Vercel and redeploy."
+          );
+          if (!cancelled) {
+            setSession(null);
+            setStep("auth");
+          }
+          return;
+        }
+
         const { data, error } = await supabase.auth.getSession();
         if (cancelled) return;
 
@@ -245,7 +275,10 @@ function App() {
           setChats([]);
           setCurrentChatId(null);
         } else {
-          const profile = await loadProfile(currentSession.user.id);
+          const profile = await loadProfileWithTimeout(
+            loadProfile,
+            currentSession.user.id
+          );
           if (profile?.onboarding_role?.trim()) {
             setStep("chat");
           } else {
@@ -287,7 +320,7 @@ function App() {
       }
 
       if (event === "SIGNED_IN") {
-        const profile = await loadProfile(s.user.id);
+        const profile = await loadProfileWithTimeout(loadProfile, s.user.id);
         if (profile?.onboarding_role?.trim()) {
           setStep("chat");
         } else {
