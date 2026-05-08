@@ -71,6 +71,13 @@ import "../Chat.css";
 
 const CHAT_URL = `${CHAT_API_BASE}/chat`;
 
+/** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
+function isNewChatWelcomeContent(content) {
+  return /VisionDesignie\s*-\s*Architect Planner\s*&\s*Consultant/i.test(
+    String(content ?? "")
+  );
+}
+
 export default function Chat({
   userId = null,
   currentChatId,
@@ -387,11 +394,16 @@ export default function Chat({
 
     (async () => {
       const mapRows = (rows) =>
-        (rows ?? []).map((m) => ({
+        (rows ?? []).map((m, idx) => ({
           id: m.id,
           role: m.role,
           content: m.content ?? "",
           created_at: m.created_at ?? null,
+          ...(idx === 0 &&
+          m.role === "assistant" &&
+          isNewChatWelcomeContent(m.content)
+            ? { chatInitGreeting: true }
+            : {}),
         }));
 
       const applyDesignFromChatRow = (chatMeta) => {
@@ -473,16 +485,64 @@ export default function Chat({
         }
 
         if (cancelled || !mountedRef.current) return;
+
+        const { data: again } = await supabase
+          .from("messages")
+          .select("id")
+          .eq("chat_id", currentChatId)
+          .limit(1);
+        if (cancelled || !mountedRef.current) return;
+        if (again?.length) {
+          const { data: full, error: fullErr } = await supabase
+            .from("messages")
+            .select("id, role, content, created_at")
+            .eq("chat_id", currentChatId)
+            .order("created_at", { ascending: true });
+          if (cancelled || !mountedRef.current) return;
+          if (fullErr) {
+            console.error(fullErr);
+            return;
+          }
+          if (full?.length) {
+            setMessages(mapRows(full));
+            applyDesignFromChatRow(chatMeta);
+          }
+          return;
+        }
+
         const welcomeText = getNewChatWelcomeMessage(usernameRef.current);
-        setMessages([
-          {
-            id: `local-chat-welcome-${hydrationForChatId}`,
-            role: "assistant",
-            content: welcomeText,
-            created_at: new Date().toISOString(),
-            chatInitGreeting: true,
-          },
-        ]);
+        const { data: welcomeRow, error: welcomeErr } = await saveMessage({
+          chat_id: currentChatId,
+          role: "assistant",
+          content: welcomeText,
+        });
+
+        if (cancelled || !mountedRef.current) return;
+        if (!welcomeErr && welcomeRow) {
+          setMessages([
+            {
+              id: welcomeRow.id,
+              role: welcomeRow.role,
+              content: welcomeRow.content ?? "",
+              created_at: welcomeRow.created_at ?? null,
+              chatInitGreeting: true,
+            },
+          ]);
+        } else {
+          console.warn(
+            "Could not persist new-chat welcome; using local-only greeting",
+            welcomeErr
+          );
+          setMessages([
+            {
+              id: `local-chat-welcome-${hydrationForChatId}`,
+              role: "assistant",
+              content: welcomeText,
+              created_at: new Date().toISOString(),
+              chatInitGreeting: true,
+            },
+          ]);
+        }
         // Empty/new chat must always start clean; avoid stale approval/complete
         // state from a previously persisted chats.design_state payload.
         resetDesignForEmptyThread();
@@ -503,22 +563,40 @@ export default function Chat({
     };
   }, [currentChatId]);
 
-  /** If profile name loads after the empty-thread welcome, refresh the greeting text. */
+  /** If profile name loads after the empty-thread welcome, refresh the greeting text (and DB row if persisted). */
   useEffect(() => {
     if (!currentChatId) return;
+    const localWelcomeId = `local-chat-welcome-${currentChatId}`;
+    const w = getNewChatWelcomeMessage(username);
     setMessages((prev) => {
       const first = prev[0];
-      if (
-        !first ||
-        first.role !== "assistant" ||
-        !first.chatInitGreeting ||
-        String(first.id) !== `local-chat-welcome-${currentChatId}`
-      ) {
-        return prev;
-      }
-      const w = getNewChatWelcomeMessage(username);
+      if (!first || first.role !== "assistant") return prev;
+
+      const isLocalWelcome =
+        first.chatInitGreeting === true &&
+        String(first.id) === localWelcomeId;
+
+      const isPersistedWelcome =
+        first.chatInitGreeting === true ||
+        (prev[0] === first &&
+          first.role === "assistant" &&
+          isNewChatWelcomeContent(first.content));
+
+      if (!isLocalWelcome && !isPersistedWelcome) return prev;
       if (first.content === w) return prev;
-      return [{ ...first, content: w }, ...prev.slice(1)];
+
+      if (
+        first.id &&
+        String(first.id) !== localWelcomeId &&
+        !String(first.id).startsWith("local-")
+      ) {
+        void supabase
+          .from("messages")
+          .update({ content: w })
+          .eq("id", first.id);
+      }
+
+      return [{ ...first, content: w, chatInitGreeting: true }, ...prev.slice(1)];
     });
   }, [username, currentChatId]);
 
