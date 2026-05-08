@@ -401,13 +401,8 @@ export function buildRagMessageWithMemoryHint(userText, designState, priorMessag
  * @param {string} [username]
  */
 export function getNewChatWelcomeMessage(username = "") {
-  const name = (username || "").trim();
-  const greet = name ? `Hi, ${name}!` : "Hi!";
-  return (
-    `${greet} VisionDesignie - Architect Planner & Consultant.\n\n` +
-    "If you want a plan just do ask plan discussion.\n" +
-    "If you want guidance, ask any architecture question and I will answer with practical knowledge."
-  );
+  void username;
+  return "Hi I'm VisionDesignie - Architect Planner & Consultant.";
 }
 
 /**
