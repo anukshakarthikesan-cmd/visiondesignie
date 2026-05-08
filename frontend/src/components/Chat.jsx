@@ -71,6 +71,9 @@ import "../Chat.css";
 
 const CHAT_URL = `${CHAT_API_BASE}/chat`;
 
+/** Abort stalled /chat SSE reads (cold Render + RAG + embeddings can exceed 60s). */
+const STREAM_FETCH_TIMEOUT_MS = 240_000;
+
 /** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
 function isNewChatWelcomeContent(content) {
   return /VisionDesignie\s*-\s*Architect Planner\s*&\s*Consultant/i.test(
@@ -784,6 +787,13 @@ export default function Chat({
     const ac = new AbortController();
     streamAbortRef.current = ac;
 
+    let streamFetchTimeoutId = null;
+    let streamFetchDidTimeout = false;
+    streamFetchTimeoutId = window.setTimeout(() => {
+      streamFetchDidTimeout = true;
+      ac.abort();
+    }, STREAM_FETCH_TIMEOUT_MS);
+
     const priorMessages = messagesRef.current.slice();
     const historySlice =
       Array.isArray(apiHistorySlice) && apiHistorySlice.length > 0
@@ -916,7 +926,9 @@ export default function Chat({
       drainBuffer(bufferRef);
     } catch (e) {
       if (e?.name === "AbortError" || ac.signal.aborted) {
-        assistantMirrorRef.current = "";
+        assistantMirrorRef.current = streamFetchDidTimeout
+          ? "This is taking longer than expected — the server may be waking up (cold start on free hosting can take 1–2 minutes). Please wait and send your message again."
+          : "";
       } else {
         console.error(e);
         if (mountedRef.current) {
@@ -933,6 +945,10 @@ export default function Chat({
         }
       }
     } finally {
+      if (streamFetchTimeoutId != null) {
+        clearTimeout(streamFetchTimeoutId);
+        streamFetchTimeoutId = null;
+      }
       if (reader) {
         try {
           await reader.cancel();
@@ -1268,6 +1284,13 @@ export default function Chat({
     const ac = new AbortController();
     streamAbortRef.current = ac;
 
+    let streamFetchTimeoutId = null;
+    let streamFetchDidTimeout = false;
+    streamFetchTimeoutId = window.setTimeout(() => {
+      streamFetchDidTimeout = true;
+      ac.abort();
+    }, STREAM_FETCH_TIMEOUT_MS);
+
     const nextDesign = decision.nextState;
 
     const { data: userRow, error: userErr } = await saveMessage({
@@ -1401,7 +1424,9 @@ export default function Chat({
       drainBuffer(bufferRef);
     } catch (e) {
       if (e?.name === "AbortError" || ac.signal.aborted) {
-        assistantMirrorRef.current = "";
+        assistantMirrorRef.current = streamFetchDidTimeout
+          ? "This is taking longer than expected — the server may be waking up (cold start on free hosting can take 1–2 minutes). Please wait and send your message again."
+          : "";
         consultationStreamPhaseRef.current = null;
         return;
       }
@@ -1419,6 +1444,10 @@ export default function Chat({
         });
       }
     } finally {
+      if (streamFetchTimeoutId != null) {
+        clearTimeout(streamFetchTimeoutId);
+        streamFetchTimeoutId = null;
+      }
       if (reader) {
         try {
           await reader.cancel();
