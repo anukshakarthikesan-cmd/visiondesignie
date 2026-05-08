@@ -191,9 +191,8 @@ def _log_retrieval_debug(clean_query: str, docs: list[Any]) -> None:
     logger.info("rag_debug query=%r docs=%d\n%s", clean_query, len(docs), "\n".join(rows))
 
 _WELCOME = (
-    "Hi - VisionDesignie is your Architect Planner & Consultant. "
-    "For planning, share plot size + location + BHK. "
-    "For guidance, ask any architecture question."
+    "For planning, share plot details.\n"
+    "For guidance, ask any questions."
 )
 
 # --- Structured output post-processing (RAG pipeline only; retrieval unchanged) ---

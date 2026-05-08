@@ -39,6 +39,7 @@ import { buildApiMessageWithRecentHistory } from "../lib/chatApiContext";
 import {
   detectIntent,
   getIntentScores,
+  isLightOpenerMessage,
 } from "../lib/intentDetection";
 import {
   assistantLooksStructured,
@@ -83,6 +84,8 @@ const EMPTY_PLANNING_TEXT_FALLBACK =
   "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
 const EMPTY_STREAM_FALLBACK =
   "I couldn't capture a full reply this time (temporary network interruption). Please send your message again.";
+const PLANNING_ENTRY_HINT =
+  "For planning, share plot details.\nFor guidance, ask any questions.";
 
 function normalizeSseBuffer(text) {
   return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
@@ -883,6 +886,7 @@ export default function Chat({
     intent,
     apiHistorySlice,
     planningFollowupQuestion = "",
+    appendPlanningFollowup = false,
   }) {
     pendingContentRef.current = "";
     assistantMirrorRef.current = "";
@@ -1112,6 +1116,7 @@ export default function Chat({
         }
       }
       if (
+        appendPlanningFollowup &&
         intent === "knowledge" &&
         planningFollowupQuestion &&
         typeof planningFollowupQuestion === "string"
@@ -1236,6 +1241,11 @@ export default function Chat({
       }
     );
     const detected = detectIntent(text, mergedForPlan);
+    const shouldShowPlanningEntryHint =
+      isPlanner &&
+      inGatheringStage &&
+      !hasEnoughForLayoutProfile(mergedForPlan) &&
+      isLightOpenerMessage(text, mergedForPlan);
     const canForcePlan =
       isPlanner &&
       stageNow !== "planning" &&
@@ -1258,6 +1268,7 @@ export default function Chat({
             : inGatheringStage || fsmLocked
               ? "consultation"
               : detected;
+    if (shouldShowPlanningEntryHint) intent = "consultation";
 
     if (import.meta.env.DEV) {
       console.log("[intent]", {
@@ -1288,12 +1299,18 @@ export default function Chat({
     ) {
       const planningFollowupQuestion =
         isPlanner && inGatheringStage ? getNextQuestion(mergedForPlan) ?? "" : "";
+      const appendPlanningFollowup =
+        isPlanner &&
+        inGatheringStage &&
+        !hasEnoughForLayoutProfile(mergedForPlan) &&
+        !isLightOpenerMessage(text, mergedForPlan);
       await runKnowledgeOrHybridIntent({
         text,
         sendChatId,
         intent,
         apiHistorySlice,
         planningFollowupQuestion,
+        appendPlanningFollowup,
       });
       return;
     }
@@ -1302,20 +1319,26 @@ export default function Chat({
     const planStateForced = canForcePlan
       ? enrichPlanningState(mergedForPlan)
       : null;
-    const decision = canForcePlan
+    const decision = shouldShowPlanningEntryHint
       ? {
-          kind: "remote",
-          messageToModel: wrapPlanningPrompt(planStateForced, ""),
-          nextState: { ...planStateForced, stage: "planning" },
-          phase: "planning",
-          planningBridgeFromGathering: true,
+          kind: "local",
+          assistantText: PLANNING_ENTRY_HINT,
+          nextState: { ...mergedForPlan, stage: "gathering" },
         }
-      : planConsultationTurn(
-          designStateRef.current,
-          text,
-          lastAssistantContent ?? "",
-          mergedForPlan
-        );
+      : canForcePlan
+        ? {
+            kind: "remote",
+            messageToModel: wrapPlanningPrompt(planStateForced, ""),
+            nextState: { ...planStateForced, stage: "planning" },
+            phase: "planning",
+            planningBridgeFromGathering: true,
+          }
+        : planConsultationTurn(
+            designStateRef.current,
+            text,
+            lastAssistantContent ?? "",
+            mergedForPlan
+          );
 
     if (decision.kind === "local") {
       const { data: userRow, error: userErr } = await saveMessage({

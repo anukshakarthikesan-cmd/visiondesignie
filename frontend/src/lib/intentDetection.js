@@ -24,6 +24,34 @@ export function isSmallTalkMessage(message) {
 }
 
 /**
+ * Lightweight opener / filler turns that should get a short route hint first.
+ * Keeps first turns like "hi", "ok", "hmm", "hello buddy" from jumping into
+ * deep requirement questions before the user states intent.
+ * @param {string} message
+ * @param {Record<string, unknown>} [requirements]
+ */
+export function isLightOpenerMessage(message, requirements) {
+  const raw = String(message || "").trim();
+  if (!raw) return false;
+  if (hasStructuredFromMerged(requirements)) return false;
+  if (isSmallTalkMessage(raw)) return true;
+
+  const t = raw.toLowerCase().replace(/\s+/g, " ").trim();
+  if (/\d/.test(t)) return false;
+  if (/[?,:]/.test(t)) return false;
+  if (
+    /\b(plot|site|plan|planning|layout|fsi|setback|bhk|vastu|modern|traditional|compact)\b/.test(
+      t
+    )
+  ) {
+    return false;
+  }
+  return /^(ok|okay|hmm|hmmm|hmm+|yo|hello buddy|hello bro|hey buddy|hi buddy|start|go on|continue)$/i.test(
+    t
+  );
+}
+
+/**
  * Weighted signals — less brittle than single boolean cues.
  * Consultation patterns overlap words like "build" in "what can I build"; knowledge
  * patterns (especially "what can I") carry higher weight so exploratory questions win.
