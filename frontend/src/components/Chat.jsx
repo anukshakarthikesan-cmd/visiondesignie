@@ -1927,8 +1927,8 @@ export default function Chat({
               alt=""
               aria-hidden="true"
               title="VisionDesignie"
-              width={42}
-              height={42}
+              width={36}
+              height={36}
               decoding="async"
             />
           </div>

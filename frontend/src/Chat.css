@@ -216,12 +216,19 @@
 }
 
 .chat-topbar__brand-logo {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  border-radius: 9px;
   object-fit: contain;
   object-position: center;
   display: block;
   flex-shrink: 0;
+  background: var(--logo-bg);
+  box-shadow: 0 1px 4px var(--shadow-soft);
 }
 
 /* Brand title: responsive clamp, capped by fixed topbar height */
