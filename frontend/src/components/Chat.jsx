@@ -80,6 +80,8 @@ const CHAT_RETRY_DELAY_MS = 800;
 const EMPTY_PLANNING_TEXT_FALLBACK =
   "Your floor sketch reflects the plot and choices you confirmed — use **View floor plan** / **3D view** above.\n\n" +
   "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
+const EMPTY_STREAM_FALLBACK =
+  "I couldn't capture a full reply this time (temporary network interruption). Please send your message again.";
 
 function normalizeSseBuffer(text) {
   return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
@@ -1012,8 +1014,11 @@ export default function Chat({
       flushStreamBuffer();
       if (mountedRef.current) setStreamFinalizingUi(false);
 
-      const toPersist = assistantMirrorRef.current;
+      let toPersist = safePersistAssistantContent(assistantMirrorRef.current);
       assistantMirrorRef.current = "";
+      if (!toPersist.trim() && !ac.signal.aborted) {
+        toPersist = EMPTY_STREAM_FALLBACK;
+      }
 
       const extractedForHybrid = isPlanner
         ? extractRequirements(text, {
@@ -1518,6 +1523,8 @@ export default function Chat({
         streamPhaseSnapshot === "planning"
       ) {
         toPersist = EMPTY_PLANNING_TEXT_FALLBACK;
+      } else if (!toPersist.trim() && !ac.signal.aborted) {
+        toPersist = EMPTY_STREAM_FALLBACK;
       }
 
       if (
