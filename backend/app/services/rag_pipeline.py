@@ -13,6 +13,7 @@ sections in the prompt are named explicitly so operators can treat them as syste
 
 import json
 import logging
+import os
 import re
 import threading
 import time
@@ -77,10 +78,17 @@ def prewarm_rag() -> None:
         _get_llm()
     except Exception:
         logger.exception("prewarm_rag: llm init failed")
-    try:
-        _get_vectorstore()
-    except Exception:
-        logger.exception("prewarm_rag: vectorstore init failed")
+    # FAISS preload can be memory-heavy on small instances; keep it opt-in.
+    if (os.getenv("PREWARM_VECTORSTORE") or "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    ):
+        try:
+            _get_vectorstore()
+        except Exception:
+            logger.exception("prewarm_rag: vectorstore init failed")
 
 
 SMALL_TALK = [
@@ -1119,7 +1127,23 @@ def _rag_mode_and_payload(
             "context_build_ms": 0,
         }
     else:
-        context_block, retrieval_meta = _compose_context_with_fallback(query, user_input)
+        try:
+            context_block, retrieval_meta = _compose_context_with_fallback(query, user_input)
+        except Exception:
+            logger.exception(
+                "rag retrieval failed; continuing with llm-only response"
+            )
+            context_block = ""
+            retrieval_meta = {
+                "search_k": 3,
+                "fetch_k": 8,
+                "query_preview": (user_log or "")[:500] or None,
+                "best_doc_overlap": None,
+                "docs_returned": 0,
+                "rag_context_skipped_due_error": True,
+                "fallback_knowledge_appended": False,
+                "context_char_count": 0,
+            }
     history_text = _history_text_for_prompt(query, history)
     logger.info("Consultation phase: %s", phase)
 
