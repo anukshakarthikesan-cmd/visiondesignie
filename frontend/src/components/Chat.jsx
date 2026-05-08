@@ -748,6 +748,7 @@ export default function Chat({
   }, [layoutPlan, layoutError]);
 
   const floorSketchFpRef = useRef(null);
+  const persistedLayoutFpRef = useRef(new Map());
   useEffect(() => {
     if (!canOpenFloorPanel) {
       floorSketchFpRef.current = null;
@@ -762,6 +763,57 @@ export default function Chat({
 
   const topbarFloorPlanEnabled = canOpenFloorPanel;
   const topbarVision3dEnabled = canOpenFloorPanel && layoutPlan && !layoutError;
+
+  const persistLayoutSnapshot = useCallback(
+    async ({
+      chatId,
+      fingerprint,
+      designStateSnapshot,
+      layoutPlanSnapshot,
+      layoutErrorSnapshot,
+    }) => {
+      if (!chatId || !userId || !fingerprint) return;
+      const { error } = await supabase.from("chat_layout_versions").insert({
+        chat_id: chatId,
+        user_id: userId,
+        version: 0, // DB trigger assigns next version per chat.
+        fingerprint,
+        design_state: designStateSnapshot,
+        layout_plan: layoutPlanSnapshot,
+        layout_error: layoutErrorSnapshot ?? null,
+      });
+      if (!error) return;
+      // Duplicate fingerprint for same chat is expected on rerenders/no-op changes.
+      if (error.code === "23505") return;
+      console.error("chat_layout_versions insert", error);
+    },
+    [userId]
+  );
+
+  useEffect(() => {
+    if (!currentChatId || !canOpenFloorPanel) return;
+    const fp = floorSketchFingerprint;
+    if (!fp) return;
+    const map = persistedLayoutFpRef.current;
+    const last = map.get(currentChatId);
+    if (last === fp) return;
+    map.set(currentChatId, fp);
+    void persistLayoutSnapshot({
+      chatId: currentChatId,
+      fingerprint: fp,
+      designStateSnapshot: { ...designState },
+      layoutPlanSnapshot: layoutPlan,
+      layoutErrorSnapshot: layoutError,
+    });
+  }, [
+    currentChatId,
+    canOpenFloorPanel,
+    floorSketchFingerprint,
+    designState,
+    layoutPlan,
+    layoutError,
+    persistLayoutSnapshot,
+  ]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
