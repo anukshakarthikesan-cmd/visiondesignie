@@ -760,6 +760,9 @@ export default function Chat({
     floorSketchFpRef.current = fp;
   }, [canOpenFloorPanel, floorSketchFingerprint]);
 
+  const topbarFloorPlanEnabled = canOpenFloorPanel;
+  const topbarVision3dEnabled = canOpenFloorPanel && layoutPlan && !layoutError;
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -1851,27 +1854,33 @@ export default function Chat({
           </div>
         </div>
         <div className="chat-topbar__trailing">
-          {canOpenFloorPanel ? (
-            <button
-              type="button"
-              className="chat-topbar__design-toggle"
-              aria-pressed={designPanelOpen}
-              onClick={() => setDesignPanelOpen(true)}
-              title="Open floor plan sketch"
-            >
-              <span>Floor plan</span>
-            </button>
-          ) : null}
-          {canOpenFloorPanel && layoutPlan && !layoutError ? (
-            <button
-              type="button"
-              className="chat-topbar__design-toggle chat-topbar__vision3d-btn"
-              onClick={() => void handleOpenVision3D()}
-              title="Open 3D plan"
-            >
-              <span>3D plan</span>
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="chat-topbar__design-toggle"
+            aria-pressed={topbarFloorPlanEnabled ? designPanelOpen : false}
+            onClick={() => setDesignPanelOpen(true)}
+            title={
+              topbarFloorPlanEnabled
+                ? "Open floor plan sketch"
+                : "Floor plan will be enabled after layout generation"
+            }
+            disabled={!topbarFloorPlanEnabled}
+          >
+            <span>Floor plan</span>
+          </button>
+          <button
+            type="button"
+            className="chat-topbar__design-toggle chat-topbar__vision3d-btn"
+            onClick={() => void handleOpenVision3D()}
+            title={
+              topbarVision3dEnabled
+                ? "Open 3D plan"
+                : "3D layout will be enabled after layout generation"
+            }
+            disabled={!topbarVision3dEnabled}
+          >
+            <span>3D plan</span>
+          </button>
           {onOpenDashboard ? (
             <button
               type="button"

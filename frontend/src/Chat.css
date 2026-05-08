@@ -409,6 +409,19 @@ html.theme-cosmic .chat-topbar__dashboard:hover {
   color: var(--text);
 }
 
+.chat-topbar__design-toggle:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  color: var(--muted);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.chat-topbar__design-toggle:disabled:hover {
+  background: var(--surface);
+  color: var(--muted);
+}
+
 .chat-topbar__design-toggle[aria-pressed="true"] {
   color: var(--text);
   border-color: var(--text);
