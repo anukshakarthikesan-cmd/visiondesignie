@@ -836,6 +836,51 @@ html.theme-cosmic .chat-subheader-card {
   line-height: 1.5;
 }
 
+.chat-mode-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chat-mode-toggle--empty {
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.chat-mode-toggle--composer {
+  padding: 0.35rem 1rem 0.25rem;
+  justify-content: flex-start;
+}
+
+.chat-mode-toggle__btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chat-mode-toggle__btn:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+}
+
+.chat-mode-toggle__btn.is-active {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.chat-mode-toggle__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @keyframes chatBubbleFadeIn {
   from {
     opacity: 0;

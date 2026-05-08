@@ -82,6 +82,29 @@ const EMPTY_PLANNING_TEXT_FALLBACK =
   "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
 const EMPTY_STREAM_FALLBACK =
   "I couldn't capture a full reply this time (temporary network interruption). Please send your message again.";
+const CHAT_MODE_STORAGE_KEY = "vd-chat-mode";
+const CHAT_MODES = Object.freeze({
+  auto: "auto",
+  planning: "planning",
+  knowledge: "knowledge",
+});
+const CHAT_MODE_OPTIONS = [
+  { id: CHAT_MODES.auto, label: "Auto" },
+  { id: CHAT_MODES.planning, label: "Plan my project" },
+  { id: CHAT_MODES.knowledge, label: "Ask architecture question" },
+];
+
+function readStoredChatMode() {
+  try {
+    const v = String(localStorage.getItem(CHAT_MODE_STORAGE_KEY) || "").trim();
+    if (v === CHAT_MODES.planning || v === CHAT_MODES.knowledge || v === CHAT_MODES.auto) {
+      return v;
+    }
+  } catch {
+    /* ignore */
+  }
+  return CHAT_MODES.auto;
+}
 
 function normalizeSseBuffer(text) {
   return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
@@ -129,6 +152,7 @@ export default function Chat({
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [speechListening, setSpeechListening] = useState(false);
+  const [chatMode, setChatMode] = useState(readStoredChatMode);
   const [designState, setDesignState] = useState(INITIAL_DESIGN_STATE);
   /** True while loading message history after `currentChatId` changes (avoids quick-start flash). */
   const [threadHydrating, setThreadHydrating] = useState(() =>
@@ -243,6 +267,14 @@ export default function Chat({
   useEffect(() => {
     latestMessageRef.current = message;
   }, [message]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CHAT_MODE_STORAGE_KEY, chatMode);
+    } catch {
+      /* ignore */
+    }
+  }, [chatMode]);
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -1181,7 +1213,7 @@ export default function Chat({
      * Keep planning stage on the consultation path so we do not interleave streams.
      * When forcing the first plan, skip a hybrid RAG detour (merged facts still feed planning).
      */
-    const intent =
+    let intent =
       stageNow === "planning"
         ? "consultation"
         : detected === "knowledge"
@@ -1191,6 +1223,15 @@ export default function Chat({
             : inGatheringStage || fsmLocked
               ? "consultation"
               : detected;
+
+    // User-selected mode override for new turns; keep active planning streams in consultation lane.
+    if (stageNow !== "planning") {
+      if (chatMode === CHAT_MODES.knowledge) {
+        intent = "knowledge";
+      } else if (chatMode === CHAT_MODES.planning) {
+        intent = "consultation";
+      }
+    }
 
     if (import.meta.env.DEV) {
       console.log("[intent]", {
@@ -1212,6 +1253,7 @@ export default function Chat({
         fsmLocked,
         canForcePlan,
         ...getIntentScores(text, mergedForPlan),
+        chatMode,
       });
     }
 
@@ -1925,6 +1967,20 @@ export default function Chat({
                   ? "Loading this conversation..."
                   : "Tell me about your plot or what you're planning to build - ask anything about layout, codes, or concepts."}
               </p>
+              {!threadHydrating ? (
+                <div className="chat-mode-toggle chat-mode-toggle--empty" role="group" aria-label="Chat mode">
+                  {CHAT_MODE_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      className={`chat-mode-toggle__btn${chatMode === opt.id ? " is-active" : ""}`}
+                      onClick={() => setChatMode(opt.id)}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         ) : null}
@@ -2138,6 +2194,19 @@ export default function Chat({
       ) : null}
 
       <div className="chat-composer">
+        <div className="chat-mode-toggle chat-mode-toggle--composer" role="group" aria-label="Chat mode">
+          {CHAT_MODE_OPTIONS.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              className={`chat-mode-toggle__btn${chatMode === opt.id ? " is-active" : ""}`}
+              onClick={() => setChatMode(opt.id)}
+              disabled={composerHardDisabled}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
         <div className="chat-input-wrapper">
           {pendingTextAttachments.length > 0 ? (
             <div
