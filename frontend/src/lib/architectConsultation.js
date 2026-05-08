@@ -1077,7 +1077,7 @@ export function getNextQuestion(r) {
     r?.location != null && String(r.location).trim() !== "" ? r.location : null;
   const bhk = r?.bhk != null && Number(r.bhk) > 0 ? r.bhk : null;
   if (!plot && !loc) {
-    return "To start planning, share your plot size and location. If you want knowledge only, ask your architecture question directly.";
+    return "Great — let's start the plan. What is your plot size?";
   }
   if (!plot) return "To continue planning, what is your plot size?";
   if (!loc) return "To continue planning, which city is your plot in?";
