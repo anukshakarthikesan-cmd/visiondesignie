@@ -24,7 +24,7 @@ import {
   planConsultationTurn,
   RAG_BUILDER_PERSONA_PREFIX,
   MSG_REDESIGN_CONVERSATION_PROMPT,
-  sanitizeAssistantRagEcho,
+  safePersistAssistantContent,
   stripTrailingPlanJson,
   wrapPlanningPrompt,
 } from "../lib/architectConsultation";
@@ -73,6 +73,11 @@ const CHAT_URL = `${CHAT_API_BASE}/chat`;
 
 /** Abort stalled /chat SSE reads (cold Render + RAG + embeddings can exceed 60s). */
 const STREAM_FETCH_TIMEOUT_MS = 240_000;
+
+/** When the model streamed nothing or sanitization blanked the planning reply. */
+const EMPTY_PLANNING_TEXT_FALLBACK =
+  "Your floor sketch reflects the plot and choices you confirmed — use **View floor plan** / **3D view** above.\n\n" +
+  "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
 
 /** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
 function isNewChatWelcomeContent(content) {
@@ -983,9 +988,8 @@ export default function Chat({
           return String(v).trim() !== "";
         });
 
-      let mainContentToSave =
-        toPersist !== "" ? sanitizeAssistantRagEcho(toPersist) : toPersist;
-      if (toPersist !== "") {
+      let mainContentToSave = safePersistAssistantContent(toPersist);
+      if (toPersist.trim() !== "") {
         if (intent === "knowledge") {
           mainContentToSave = stripTrailingPlanJson(mainContentToSave);
         }
@@ -1005,7 +1009,7 @@ export default function Chat({
       if (
         mountedRef.current &&
         sendChatId &&
-        toPersist !== "" &&
+        mainContentToSave.trim() !== "" &&
         !ac.signal.aborted
       ) {
         try {
@@ -1464,13 +1468,20 @@ export default function Chat({
 
       const toPersistRaw = assistantMirrorRef.current;
       assistantMirrorRef.current = "";
-      const toPersist =
-        toPersistRaw !== "" ? sanitizeAssistantRagEcho(toPersistRaw) : "";
+      const streamPhaseSnapshot = consultationStreamPhaseRef.current;
+      let toPersist = safePersistAssistantContent(toPersistRaw);
+      if (
+        !toPersist.trim() &&
+        !ac.signal.aborted &&
+        streamPhaseSnapshot === "planning"
+      ) {
+        toPersist = EMPTY_PLANNING_TEXT_FALLBACK;
+      }
 
       if (
         mountedRef.current &&
         sendChatId &&
-        toPersist !== "" &&
+        toPersist.trim() !== "" &&
         !ac.signal.aborted
       ) {
         try {

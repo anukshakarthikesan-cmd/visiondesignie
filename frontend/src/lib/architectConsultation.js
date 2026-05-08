@@ -274,6 +274,21 @@ export function sanitizeAssistantRagEcho(content) {
 }
 
 /**
+ * Persist/DB cleanup: run {@link sanitizeAssistantRagEcho}, then if that over-aggressively
+ * blanks a non-empty stream (planning replies can match strip patterns), fall back.
+ */
+export function safePersistAssistantContent(content) {
+  if (content == null || typeof content !== "string") return "";
+  const raw = content.trim();
+  if (!raw) return "";
+  const aggressive = sanitizeAssistantRagEcho(raw);
+  if (aggressive.trim()) return aggressive.trim();
+  const light = stripAssistantPromptLeakage(raw);
+  if (light.trim()) return light.trim();
+  return raw;
+}
+
+/**
  * Soft handoff after knowledge-only RAG — varies when the user already sounds site-specific.
  * @param {string} rawMessage
  * @param {Record<string, unknown>} extracted from {@link extractInputs}
