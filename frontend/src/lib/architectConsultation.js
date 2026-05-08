@@ -1155,6 +1155,30 @@ export function wantsPlanChanges(text) {
   );
 }
 
+function looksArchitectureKnowledgeQuestion(text) {
+  const t = (text || "").trim().toLowerCase();
+  if (!t) return false;
+  if (userWantsToViewPlan(t) || wantsPlanChanges(t) || isAffirmative(t) || isNegative(t)) {
+    return false;
+  }
+  if (
+    /\b(cmda|dtcp|setback|fsi|far|zoning|bylaw|by-law|regulation|building\s+rule|approval)\b/i.test(
+      t
+    )
+  ) {
+    return true;
+  }
+  if (
+    /\b(what|why|how|can|is|are|does|do)\b/i.test(t) &&
+    /\b(plot|site|house|plan|layout|architecture|building|permit|rule|road|ventilation|lighting)\b/i.test(
+      t
+    )
+  ) {
+    return true;
+  }
+  return t.includes("?");
+}
+
 export function buildApprovalPrompt() {
   return MSG_APPROVAL_FOLLOWUP;
 }
@@ -1257,7 +1281,7 @@ export function wrapPlanningRevisionPrompt(state, userNote, priorPlanExcerpt) {
  * Decide how to handle this user turn.
  * @param {string} [lastAssistantContent] Latest assistant reply (for plan revisions).
  * @param {object} mergedState Result of {@link mergeRequirementsFromMessage} for this turn (caller merges once).
- * @returns {{ kind: 'local', assistantText: string, nextState: object } | { kind: 'remote', messageToModel: string, nextState: object, phase: 'planning', planningBridgeFromGathering?: boolean }}
+ * @returns {{ kind: 'local', assistantText: string, nextState: object } | { kind: 'remote', messageToModel: string, nextState: object, phase: 'planning' | 'knowledge', planningBridgeFromGathering?: boolean }}
  */
 export function planConsultationTurn(
   prevState,
@@ -1298,6 +1322,14 @@ export function planConsultationTurn(
         nextState: { ...merged, stage: "complete" },
       };
     }
+    if (looksArchitectureKnowledgeQuestion(userText)) {
+      return {
+        kind: "remote",
+        messageToModel: userText,
+        nextState: { ...prevState },
+        phase: "knowledge",
+      };
+    }
     return {
       kind: "local",
       assistantText:
@@ -1336,6 +1368,14 @@ export function planConsultationTurn(
         nextState: { ...prevState },
       };
     }
+    if (looksArchitectureKnowledgeQuestion(userText)) {
+      return {
+        kind: "remote",
+        messageToModel: userText,
+        nextState: { ...prevState },
+        phase: "knowledge",
+      };
+    }
     return {
       kind: "local",
       assistantText:
@@ -1363,6 +1403,14 @@ export function planConsultationTurn(
         nextState: { ...planState, stage: "planning" },
         phase: "planning",
         planningBridgeFromGathering: true,
+      };
+    }
+    if (looksArchitectureKnowledgeQuestion(userText)) {
+      return {
+        kind: "remote",
+        messageToModel: userText,
+        nextState: { ...merged, stage: "gathering" },
+        phase: "knowledge",
       };
     }
     const q = getNextQuestion(merged) ?? "What is your plot size and location?";
