@@ -73,6 +73,8 @@ const CHAT_URL = `${CHAT_API_BASE}/chat`;
 
 /** Abort stalled /chat SSE reads (cold Render + RAG + embeddings can exceed 60s). */
 const STREAM_FETCH_TIMEOUT_MS = 240_000;
+const CHAT_FETCH_RETRIES = 1;
+const CHAT_RETRY_DELAY_MS = 800;
 
 /** When the model streamed nothing or sanitization blanked the planning reply. */
 const EMPTY_PLANNING_TEXT_FALLBACK =
@@ -81,6 +83,18 @@ const EMPTY_PLANNING_TEXT_FALLBACK =
 
 function normalizeSseBuffer(text) {
   return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}
+
+function isTransientNetworkFetchError(err) {
+  const msg = String(err?.message || err || "");
+  return (
+    err instanceof TypeError ||
+    /Failed to fetch|NetworkError|ERR_NETWORK_CHANGED|Load failed/i.test(msg)
+  );
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
@@ -197,6 +211,32 @@ export default function Chat({
     }
     return body;
   };
+
+  const fetchChatStream = useCallback(
+    async (body, signal) => {
+      let lastErr = null;
+      for (let attempt = 0; attempt <= CHAT_FETCH_RETRIES; attempt += 1) {
+        try {
+          const res = await fetch(CHAT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            signal,
+          });
+          return res;
+        } catch (e) {
+          lastErr = e;
+          if (signal?.aborted) throw e;
+          if (!isTransientNetworkFetchError(e) || attempt >= CHAT_FETCH_RETRIES) {
+            throw e;
+          }
+          await sleep(CHAT_RETRY_DELAY_MS * (attempt + 1));
+        }
+      }
+      throw lastErr ?? new Error("Failed to start chat stream");
+    },
+    []
+  );
 
   useEffect(() => {
     latestMessageRef.current = message;
@@ -907,12 +947,10 @@ export default function Chat({
     let reader;
     try {
       streamStartedAtRef.current = performance.now();
-      const res = await fetch(CHAT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildChatApiPayload(messageForModel, sendChatId, text)),
-        signal: ac.signal,
-      });
+      const res = await fetchChatStream(
+        buildChatApiPayload(messageForModel, sendChatId, text),
+        ac.signal
+      );
 
       if (!res.ok || !res.body) {
         throw new Error(`Request failed: ${res.status}`);
@@ -1404,14 +1442,10 @@ export default function Chat({
 
     try {
       streamStartedAtRef.current = performance.now();
-      const res = await fetch(CHAT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          buildChatApiPayload(consultationPayload, sendChatId, text)
-        ),
-        signal: ac.signal,
-      });
+      const res = await fetchChatStream(
+        buildChatApiPayload(consultationPayload, sendChatId, text),
+        ac.signal
+      );
 
       if (!res.ok || !res.body) {
         throw new Error(`Request failed: ${res.status}`);

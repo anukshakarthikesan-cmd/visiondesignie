@@ -2,6 +2,20 @@ import { CHAT_API_BASE } from "./chatApiBase";
 import { splitPlanJsonFromMessage } from "./extractPlanJson";
 
 const CHAT_TITLE_URL = `${CHAT_API_BASE}/chat/title`;
+const TITLE_FETCH_RETRIES = 2;
+const TITLE_RETRY_DELAY_MS = 700;
+
+function isTransientNetworkFetchError(err) {
+  const msg = String(err?.message || err || "");
+  return (
+    err instanceof TypeError ||
+    /Failed to fetch|NetworkError|ERR_NETWORK_CHANGED|Load failed/i.test(msg)
+  );
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 /**
  * Build a compact transcript for the title model from messages before this turn plus the latest pair.
@@ -51,18 +65,33 @@ export function transcriptForChatTitle(baseMessages, userText, assistantText) {
  */
 export async function fetchChatTitleFromApi(messages, chatType) {
   if (!Array.isArray(messages) || messages.length === 0) return null;
-  const res = await fetch(CHAT_TITLE_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      messages,
-      chat_type: chatType || null,
-    }),
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  const t = typeof data?.title === "string" ? data.title.trim() : "";
-  return t || null;
+  let lastError = null;
+  for (let attempt = 0; attempt <= TITLE_FETCH_RETRIES; attempt += 1) {
+    try {
+      const res = await fetch(CHAT_TITLE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages,
+          chat_type: chatType || null,
+        }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      const t = typeof data?.title === "string" ? data.title.trim() : "";
+      return t || null;
+    } catch (e) {
+      lastError = e;
+      if (!isTransientNetworkFetchError(e) || attempt >= TITLE_FETCH_RETRIES) {
+        break;
+      }
+      await sleep(TITLE_RETRY_DELAY_MS * (attempt + 1));
+    }
+  }
+  if (lastError && !isTransientNetworkFetchError(lastError)) {
+    throw lastError;
+  }
+  return null;
 }
 
 /**

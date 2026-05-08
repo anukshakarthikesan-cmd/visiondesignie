@@ -21,7 +21,7 @@ const readStoredTheme = () => {
 };
 
 /** Avoid infinite "Loading…" if Supabase `profiles` never returns (RLS, network, misconfig). */
-const PROFILE_LOAD_TIMEOUT_MS = 8000;
+const PROFILE_LOAD_TIMEOUT_MS = 20000;
 const HAS_ENTERED_CHAT_KEY = "vd-has-entered-chat";
 
 function hasEnteredChatBefore() {
