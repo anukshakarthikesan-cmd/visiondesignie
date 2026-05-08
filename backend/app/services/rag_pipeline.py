@@ -68,6 +68,21 @@ def get_llm():
     return _get_llm()
 
 
+def prewarm_rag() -> None:
+    """
+    Best-effort warm-up to reduce time-to-first-token on hosted cold starts.
+    Runs in a background thread from FastAPI lifespan so the server can bind PORT first.
+    """
+    try:
+        _get_llm()
+    except Exception:
+        logger.exception("prewarm_rag: llm init failed")
+    try:
+        _get_vectorstore()
+    except Exception:
+        logger.exception("prewarm_rag: vectorstore init failed")
+
+
 SMALL_TALK = [
     "hi",
     "hii",

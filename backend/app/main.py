@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from threading import Thread
 
 from app.api.chat import router as chat_router
 from app.api.chat_title import router as chat_title_router
@@ -17,10 +18,14 @@ from app.core.config import (
 )
 from app.limiter import limiter
 from app.services.rag_metrics_supabase import close_metrics_http_client
+from app.services.rag_pipeline import prewarm_rag
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Warm heavy deps in background so /chat responds fast after login.
+    # Do not block startup (Render requires binding PORT quickly).
+    Thread(target=prewarm_rag, daemon=True).start()
     yield
     close_metrics_http_client()
 
