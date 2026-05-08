@@ -13,6 +13,7 @@ import { getResponse } from "../lib/getResponse";
 import {
   INITIAL_DESIGN_STATE,
   extractRequirements,
+  getNextQuestion,
   getNewChatWelcomeMessage,
   mergeRequirementsFromMessage,
   mergeRequirementsIntoState,
@@ -881,6 +882,7 @@ export default function Chat({
     sendChatId,
     intent,
     apiHistorySlice,
+    planningFollowupQuestion = "",
   }) {
     pendingContentRef.current = "";
     assistantMirrorRef.current = "";
@@ -1109,6 +1111,16 @@ export default function Chat({
           }
         }
       }
+      if (
+        intent === "knowledge" &&
+        planningFollowupQuestion &&
+        typeof planningFollowupQuestion === "string"
+      ) {
+        const q = planningFollowupQuestion.trim();
+        if (q && !mainContentToSave.includes(q)) {
+          mainContentToSave = `${mainContentToSave}\n\nFor planning, next: ${q}`;
+        }
+      }
 
       if (
         mountedRef.current &&
@@ -1274,11 +1286,14 @@ export default function Chat({
       intent === "knowledge" ||
       (intent === "hybrid" && !canForcePlan)
     ) {
+      const planningFollowupQuestion =
+        isPlanner && inGatheringStage ? getNextQuestion(mergedForPlan) ?? "" : "";
       await runKnowledgeOrHybridIntent({
         text,
         sendChatId,
         intent,
         apiHistorySlice,
+        planningFollowupQuestion,
       });
       return;
     }
