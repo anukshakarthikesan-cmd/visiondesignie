@@ -1100,9 +1100,27 @@ def _rag_mode_and_payload(
     if _is_planner_capabilities_meta(user_log):
         return "early", _PLANNER_CAPABILITIES_REPLY, None
 
-    context_block, retrieval_meta = _compose_context_with_fallback(query, user_input)
-    history_text = _history_text_for_prompt(query, history)
     phase = _detect_consultation_phase(query)
+    if phase == "planning":
+        # Planning wrapper already carries confirmed client inputs; avoid extra retrieval latency here.
+        context_block = (
+            "Planning stage: prioritize the confirmed client inputs from the user message. "
+            "Use concise architect judgment for regulations/layout where needed."
+        )
+        retrieval_meta = {
+            "search_k": 0,
+            "fetch_k": 0,
+            "query_preview": (user_log or "")[:500] or None,
+            "best_doc_overlap": None,
+            "rag_context_skipped_for_planning": True,
+            "fallback_knowledge_appended": False,
+            "context_char_count": len(context_block),
+            "retrieval_total_ms": 0,
+            "context_build_ms": 0,
+        }
+    else:
+        context_block, retrieval_meta = _compose_context_with_fallback(query, user_input)
+    history_text = _history_text_for_prompt(query, history)
     logger.info("Consultation phase: %s", phase)
 
     prompt = _build_architect_prompt(

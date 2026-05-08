@@ -79,6 +79,10 @@ const EMPTY_PLANNING_TEXT_FALLBACK =
   "Your floor sketch reflects the plot and choices you confirmed — use **View floor plan** / **3D view** above.\n\n" +
   "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
 
+function normalizeSseBuffer(text) {
+  return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}
+
 /** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
 function isNewChatWelcomeContent(content) {
   return /VisionDesignie\s*-\s*Architect Planner\s*&\s*Consultant/i.test(
@@ -921,10 +925,12 @@ export default function Chat({
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
-          bufferRef.value += decoder.decode();
+          bufferRef.value += normalizeSseBuffer(decoder.decode());
           break;
         }
-        bufferRef.value += decoder.decode(value, { stream: true });
+        bufferRef.value += normalizeSseBuffer(
+          decoder.decode(value, { stream: true })
+        );
         drainBuffer(bufferRef);
       }
 
@@ -1418,10 +1424,12 @@ export default function Chat({
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
-          bufferRef.value += decoder.decode();
+          bufferRef.value += normalizeSseBuffer(decoder.decode());
           break;
         }
-        bufferRef.value += decoder.decode(value, { stream: true });
+        bufferRef.value += normalizeSseBuffer(
+          decoder.decode(value, { stream: true })
+        );
         drainBuffer(bufferRef);
       }
 
