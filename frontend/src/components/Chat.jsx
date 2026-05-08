@@ -683,6 +683,12 @@ export default function Chat({
       setLayoutError(null);
       return;
     }
+    const persisted = persistedLayoutSnapshotRef.current.get(currentChatId);
+    if (persisted) {
+      setLayoutPlan(persisted.layoutPlan ?? null);
+      setLayoutError(persisted.layoutError ?? null);
+      return;
+    }
     if (!hasEnoughForLayoutProfile(designState)) {
       setLayoutPlan(null);
       setLayoutError(layoutEnginePlotError(designState.plot_size));
@@ -753,6 +759,7 @@ export default function Chat({
 
   const floorSketchFpRef = useRef(null);
   const persistedLayoutFpRef = useRef(new Map());
+  const persistedLayoutSnapshotRef = useRef(new Map());
   useEffect(() => {
     if (!canOpenFloorPanel) {
       floorSketchFpRef.current = null;
@@ -764,6 +771,43 @@ export default function Chat({
     }
     floorSketchFpRef.current = fp;
   }, [canOpenFloorPanel, floorSketchFingerprint]);
+
+  useEffect(() => {
+    if (!currentChatId || !designHydrationDone || !userId) return;
+    let cancelled = false;
+    void (async () => {
+      const { data, error } = await supabase
+        .from("chat_layout_versions")
+        .select("fingerprint, layout_plan, layout_error")
+        .eq("chat_id", currentChatId)
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (cancelled || !mountedRef.current) return;
+      if (error) {
+        console.error("chat_layout_versions select", error);
+        return;
+      }
+      if (!data) {
+        persistedLayoutSnapshotRef.current.delete(currentChatId);
+        return;
+      }
+      const snapshot = {
+        layoutPlan: data.layout_plan ?? null,
+        layoutError: data.layout_error ?? null,
+      };
+      persistedLayoutSnapshotRef.current.set(currentChatId, snapshot);
+      if (data.fingerprint) {
+        persistedLayoutFpRef.current.set(currentChatId, data.fingerprint);
+      }
+      setLayoutPlan(snapshot.layoutPlan);
+      setLayoutError(snapshot.layoutError);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentChatId, designHydrationDone, userId]);
 
   const topbarFloorPlanEnabled = canOpenFloorPanel;
   const topbarVision3dEnabled = canOpenFloorPanel && layoutPlan && !layoutError;
@@ -786,7 +830,13 @@ export default function Chat({
         layout_plan: layoutPlanSnapshot,
         layout_error: layoutErrorSnapshot ?? null,
       });
-      if (!error) return;
+      if (!error) {
+        persistedLayoutSnapshotRef.current.set(chatId, {
+          layoutPlan: layoutPlanSnapshot ?? null,
+          layoutError: layoutErrorSnapshot ?? null,
+        });
+        return;
+      }
       // Duplicate fingerprint for same chat is expected on rerenders/no-op changes.
       if (error.code === "23505") return;
       console.error("chat_layout_versions insert", error);
