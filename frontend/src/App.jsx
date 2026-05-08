@@ -22,6 +22,28 @@ const readStoredTheme = () => {
 
 /** Avoid infinite "Loading…" if Supabase `profiles` never returns (RLS, network, misconfig). */
 const PROFILE_LOAD_TIMEOUT_MS = 8000;
+const HAS_ENTERED_CHAT_KEY = "vd-has-entered-chat";
+
+function hasEnteredChatBefore() {
+  try {
+    return localStorage.getItem(HAS_ENTERED_CHAT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markEnteredChat() {
+  try {
+    localStorage.setItem(HAS_ENTERED_CHAT_KEY, "1");
+  } catch {
+    /* ignore */
+  }
+}
+
+function resolveAuthedStep(profile) {
+  if (profile?.onboarding_role?.trim()) return "chat";
+  return hasEnteredChatBefore() ? "chat" : "intro";
+}
 
 async function loadProfileWithTimeout(loadProfile, userId) {
   return Promise.race([
@@ -65,6 +87,12 @@ function App() {
       /* ignore */
     }
   }, [theme]);
+
+  useEffect(() => {
+    if (step === "chat") {
+      markEnteredChat();
+    }
+  }, [step]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -225,9 +253,7 @@ function App() {
           setStep("auth");
         } else {
           const profile = await loadProfileWithTimeout(loadProfile, s.user.id);
-          setStep(
-            profile?.onboarding_role?.trim() ? "chat" : "intro"
-          );
+          setStep(resolveAuthedStep(profile));
           void loadChats(s.user.id);
         }
       } catch (e) {
@@ -279,11 +305,7 @@ function App() {
             loadProfile,
             currentSession.user.id
           );
-          if (profile?.onboarding_role?.trim()) {
-            setStep("chat");
-          } else {
-            setStep("intro");
-          }
+          setStep(resolveAuthedStep(profile));
           void loadChats(currentSession.user.id);
         }
       } catch (err) {
@@ -321,11 +343,7 @@ function App() {
 
       if (event === "SIGNED_IN") {
         const profile = await loadProfileWithTimeout(loadProfile, s.user.id);
-        if (profile?.onboarding_role?.trim()) {
-          setStep("chat");
-        } else {
-          setStep("intro");
-        }
+        setStep(resolveAuthedStep(profile));
         void loadChats(s.user.id);
         return;
       }
