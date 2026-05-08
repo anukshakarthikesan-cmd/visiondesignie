@@ -1921,26 +1921,19 @@ export default function Chat({
       <header className="chat-topbar chat-topbar--workspace-toggle">
         <div className="chat-topbar__brand">
           <div className="chat-topbar__persona-slot">
-            <div
-              className="chat-topbar__persona-display"
+            <img
+              className="chat-topbar__brand-logo"
+              src={ASSISTANT_AVATAR_URL}
+              alt=""
               aria-hidden="true"
               title="VisionDesignie"
-            >
-              <img
-                className="chat-topbar__persona-avatar chat-topbar__persona-avatar--brand"
-                src={ASSISTANT_AVATAR_URL}
-                alt=""
-                width={42}
-                height={42}
-                decoding="async"
-              />
-            </div>
+              width={42}
+              height={42}
+              decoding="async"
+            />
           </div>
           <div className="chat-topbar__brand-copy">
             <span className="chat-topbar__brand-title">VisionDesignie</span>
-            <span className="chat-topbar__brand-sub">
-              One architect assistant - understand, explain, design
-            </span>
           </div>
         </div>
         <div className="chat-topbar__trailing">

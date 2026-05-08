@@ -215,6 +215,15 @@
   gap: 0;
 }
 
+.chat-topbar__brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+}
+
 /* Brand title: responsive clamp, capped by fixed topbar height */
 .chat-main[data-chat-type="planner"] .chat-topbar__persona-avatar {
   border-color: rgba(37, 99, 235, 0.45);
