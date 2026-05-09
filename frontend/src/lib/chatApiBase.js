@@ -18,3 +18,41 @@ function resolveChatApiBase() {
 }
 
 export const CHAT_API_BASE = resolveChatApiBase();
+
+/**
+ * Best-effort parse of FastAPI error bodies (and plain text) after a non-OK /chat response.
+ * @param {Response} res
+ * @returns {Promise<string>}
+ */
+export async function readChatApiFailureMessage(res) {
+  const status = res.status;
+  let detail = "";
+  try {
+    const text = await res.text();
+    if (text) {
+      try {
+        const j = JSON.parse(text);
+        const d = j.detail;
+        if (typeof d === "string") {
+          detail = d;
+        } else if (Array.isArray(d)) {
+          detail = d
+            .map((x) =>
+              x && typeof x === "object" && typeof x.msg === "string"
+                ? x.msg
+                : String(x)
+            )
+            .join("; ");
+        } else if (d != null) {
+          detail = String(d);
+        }
+      } catch {
+        detail = text.trim().slice(0, 800);
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  const tail = detail ? `\n\n${detail}` : "";
+  return `The chat API returned HTTP ${status}.${tail}`;
+}

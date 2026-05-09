@@ -1214,6 +1214,20 @@ def stream_chat_response_chunks(
     chat_type: str | None = None,
     user_input: str | None = None,
 ) -> Iterator[str]:
+    if not (GROQ_API_KEY or "").strip():
+        yield _format_sse(
+            {
+                "chunk": (
+                    "**VisionDesignie chat API:** Groq is not configured on this server.\n\n"
+                    "Ask whoever hosts the backend to set the **`GROQ_API_KEY`** environment variable "
+                    "(see `backend/.env.example`), redeploy, then open **`GET /health`** — "
+                    "`groq_configured` should be `true`."
+                ),
+            }
+        )
+        yield _format_sse({"done": True})
+        return
+
     if (chat_type or "").strip().lower() == "learning":
         logger.info("chat_type=learning ignored — unified architect assistant")
     history = _get_or_create_history(chat_id)

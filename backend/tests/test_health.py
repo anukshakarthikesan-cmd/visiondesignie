@@ -19,3 +19,5 @@ class TestHealth(unittest.TestCase):
         self.assertIsInstance(data["groq_configured"], bool)
         self.assertIn("supabase_metrics_configured", data)
         self.assertIn("vector_store_ready", data)
+        self.assertIn("deployment_hints", data)
+        self.assertIsInstance(data["deployment_hints"], list)

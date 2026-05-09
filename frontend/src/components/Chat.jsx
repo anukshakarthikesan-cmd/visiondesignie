@@ -9,7 +9,6 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../lib/supabaseClient";
 import { saveMessage } from "../lib/saveMessage";
-import { getResponse } from "../lib/getResponse";
 import {
   INITIAL_DESIGN_STATE,
   extractRequirements,
@@ -52,7 +51,7 @@ import {
   userMessageSignalsApproval,
 } from "../lib/chatMetricsSupabase";
 import ArchitectMessageContent from "./ArchitectMessageContent";
-import { CHAT_API_BASE } from "../lib/chatApiBase";
+import { CHAT_API_BASE, readChatApiFailureMessage } from "../lib/chatApiBase";
 import {
   transcriptForChatTitle,
   updateChatTitleWithLlm,
@@ -74,6 +73,23 @@ import {
 import "../Chat.css";
 
 const CHAT_URL = `${CHAT_API_BASE}/chat`;
+
+function messageForChatApiFailure(err) {
+  const hint = `\n\nTip: open ${CHAT_API_BASE}/health — **groq_configured** should be true; read **deployment_hints** if anything is wrong.`;
+  if (err instanceof Error && err.message) {
+    const m = err.message;
+    if (/Failed to fetch|NetworkError|Load failed/i.test(m)) {
+      return (
+        "Couldn't reach the chat API (network, wrong URL, or browser blocked the request — often CORS).\n\n" +
+        `This build calls **${CHAT_API_BASE}**. Set **VITE_CHAT_API_BASE** before ` +
+        "`npm run build` if that URL is wrong. On the API host, set **CORS_ORIGINS** to your site's origin(s), comma-separated." +
+        hint
+      );
+    }
+    return `${m}${hint}`;
+  }
+  return `Something went wrong while contacting the chat API.${hint}`;
+}
 
 /** Abort stalled /chat SSE reads (cold Render + RAG + embeddings can exceed 60s). */
 const STREAM_FETCH_TIMEOUT_MS = 240_000;
@@ -1070,7 +1086,7 @@ export default function Chat({
       );
 
       if (!res.ok || !res.body) {
-        throw new Error(`Request failed: ${res.status}`);
+        throw new Error(await readChatApiFailureMessage(res));
       }
 
       reader = res.body.getReader();
@@ -1098,7 +1114,7 @@ export default function Chat({
       } else {
         console.error(e);
         if (mountedRef.current) {
-          const botReply = await getResponse(messageForModel);
+          const botReply = messageForChatApiFailure(e);
           setMessages((prev) => {
             const next = [...prev];
             const last = next[next.length - 1];
@@ -1623,7 +1639,7 @@ export default function Chat({
       );
 
       if (!res.ok || !res.body) {
-        throw new Error(`Request failed: ${res.status}`);
+        throw new Error(await readChatApiFailureMessage(res));
       }
 
       reader = res.body.getReader();
@@ -1653,7 +1669,7 @@ export default function Chat({
       }
       console.error(e);
       if (mountedRef.current) {
-        const botReply = await getResponse(text);
+        const botReply = messageForChatApiFailure(e);
         setMessages((prev) => {
           const next = [...prev];
           const last = next[next.length - 1];
