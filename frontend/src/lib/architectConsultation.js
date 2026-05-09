@@ -415,7 +415,7 @@ export function buildRagMessageWithMemoryHint(userText, designState, priorMessag
  */
 export function getNewChatWelcomeMessage(username = "") {
   void username;
-  return "Hi I'm VisionDesignie - Architect Planner & Consultant.\nFor planning, share plot details.\nFor guidance, ask any questions.";
+  return "Hi I'm VisionDesignie - Architect Planner & Consultant.";
 }
 
 /**
