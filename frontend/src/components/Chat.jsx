@@ -775,31 +775,33 @@ export default function Chat({
   useEffect(() => {
     if (!currentChatId || !designHydrationDone || !userId) return;
     let cancelled = false;
+    const fetchedForChatId = currentChatId;
     void (async () => {
       const { data, error } = await supabase
         .from("chat_layout_versions")
         .select("fingerprint, layout_plan, layout_error")
-        .eq("chat_id", currentChatId)
+        .eq("chat_id", fetchedForChatId)
         .eq("user_id", userId)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
       if (cancelled || !mountedRef.current) return;
+      if (fetchedForChatId !== currentChatIdRef.current) return;
       if (error) {
         console.error("chat_layout_versions select", error);
         return;
       }
       if (!data) {
-        persistedLayoutSnapshotRef.current.delete(currentChatId);
+        persistedLayoutSnapshotRef.current.delete(fetchedForChatId);
         return;
       }
       const snapshot = {
         layoutPlan: data.layout_plan ?? null,
         layoutError: data.layout_error ?? null,
       };
-      persistedLayoutSnapshotRef.current.set(currentChatId, snapshot);
+      persistedLayoutSnapshotRef.current.set(fetchedForChatId, snapshot);
       if (data.fingerprint) {
-        persistedLayoutFpRef.current.set(currentChatId, data.fingerprint);
+        persistedLayoutFpRef.current.set(fetchedForChatId, data.fingerprint);
       }
       setLayoutPlan(snapshot.layoutPlan);
       setLayoutError(snapshot.layoutError);
@@ -808,9 +810,6 @@ export default function Chat({
       cancelled = true;
     };
   }, [currentChatId, designHydrationDone, userId]);
-
-  const topbarFloorPlanEnabled = canOpenFloorPanel;
-  const topbarVision3dEnabled = canOpenFloorPanel && layoutPlan && !layoutError;
 
   const persistLayoutSnapshot = useCallback(
     async ({
@@ -2002,33 +2001,6 @@ export default function Chat({
           </div>
         </div>
         <div className="chat-topbar__trailing">
-          <button
-            type="button"
-            className="chat-topbar__design-toggle"
-            aria-pressed={topbarFloorPlanEnabled ? designPanelOpen : false}
-            onClick={() => setDesignPanelOpen(true)}
-            title={
-              topbarFloorPlanEnabled
-                ? "Open floor plan sketch"
-                : "Floor plan will be enabled after layout generation"
-            }
-            disabled={!topbarFloorPlanEnabled}
-          >
-            <span>Floor plan</span>
-          </button>
-          <button
-            type="button"
-            className="chat-topbar__design-toggle chat-topbar__vision3d-btn"
-            onClick={() => void handleOpenVision3D()}
-            title={
-              topbarVision3dEnabled
-                ? "Open 3D plan"
-                : "3D layout will be enabled after layout generation"
-            }
-            disabled={!topbarVision3dEnabled}
-          >
-            <span>3D plan</span>
-          </button>
           {onOpenDashboard ? (
             <button
               type="button"
