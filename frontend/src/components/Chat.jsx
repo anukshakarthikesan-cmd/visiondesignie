@@ -1258,6 +1258,21 @@ export default function Chat({
     const sendChatId = currentChatId;
     if (!text || loading || !sendChatId) return;
 
+    const threadNow = messagesRef.current;
+    const isFreshWelcomeOnlyThread =
+      threadNow.length <= 1 &&
+      threadNow[0]?.role === "assistant" &&
+      threadNow[0]?.chatInitGreeting === true &&
+      !threadNow.some((m) => m?.role === "user");
+    const baseDesignState =
+      isFreshWelcomeOnlyThread && isPlanner
+        ? INITIAL_DESIGN_STATE
+        : designStateRef.current;
+    if (isFreshWelcomeOnlyThread && isPlanner) {
+      setDesignState(INITIAL_DESIGN_STATE);
+      designStateRef.current = INITIAL_DESIGN_STATE;
+    }
+
     titleThreadBaseRef.current = messagesRef.current
       .filter(
         (m) =>
@@ -1268,7 +1283,7 @@ export default function Chat({
 
     const apiHistorySlice = messagesRef.current.slice(-3);
 
-    const stageNow = designStateRef.current?.stage ?? "gathering";
+    const stageNow = baseDesignState?.stage ?? "gathering";
     const inGatheringStage =
       isPlanner &&
       (stageNow === "gathering" ||
@@ -1282,7 +1297,7 @@ export default function Chat({
         stageNow === "complete");
 
     const mergedForPlan = mergeRequirementsFromMessage(
-      designStateRef.current,
+      baseDesignState,
       text,
       {
         lastAssistantSnippet: lastSubstantiveAssistantContent(
