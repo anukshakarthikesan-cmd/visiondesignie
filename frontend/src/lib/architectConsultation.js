@@ -52,6 +52,8 @@ export const INITIAL_DESIGN_STATE = {
   special_requirements: [],
   facing: null,
   parking: null,
+  /** Once true, gathering asks concrete planning questions (plot, city, …). */
+  planning_engaged: false,
   stage: "gathering",
 };
 
@@ -135,6 +137,17 @@ export function normalizeDesignStateFromDb(raw) {
     special_requirements,
     facing: raw.facing != null ? String(raw.facing).trim() || null : null,
     parking: raw.parking != null ? String(raw.parking).trim() || null : null,
+    planning_engaged: (() => {
+      if (raw.planning_engaged === true) return true;
+      const hasFacts =
+        (typeof raw.plot_size === "string" && raw.plot_size.trim() !== "") ||
+        (raw.location != null && String(raw.location).trim() !== "") ||
+        (typeof raw.bhk === "number" &&
+          !Number.isNaN(raw.bhk) &&
+          raw.bhk > 0);
+      if (hasFacts) return true;
+      return stage !== "gathering";
+    })(),
     stage,
   };
 }
@@ -402,7 +415,7 @@ export function buildRagMessageWithMemoryHint(userText, designState, priorMessag
  */
 export function getNewChatWelcomeMessage(username = "") {
   void username;
-  return "Hi I'm VisionDesignie - Architect Planner & Consultant.";
+  return "Hi I'm VisionDesignie - Architect Planner & Consultant.\nFor planning, share plot details.\nFor guidance, ask any questions.";
 }
 
 /**
@@ -1077,6 +1090,7 @@ export function getNextQuestion(r) {
     r?.location != null && String(r.location).trim() !== "" ? r.location : null;
   const bhk = r?.bhk != null && Number(r.bhk) > 0 ? r.bhk : null;
   if (!plot && !loc) {
+    if (r?.planning_engaged !== true) return null;
     return "Great — let's start the plan. What is your plot size?";
   }
   if (!plot) return "To continue planning, what is your plot size?";
@@ -1423,6 +1437,14 @@ export function planConsultationTurn(
         phase: "knowledge",
       };
     }
+    if (merged.planning_engaged !== true) {
+      return {
+        kind: "local",
+        assistantText:
+          "For planning, share plot details.\nFor guidance, ask any questions.",
+        nextState: { ...merged, stage: "gathering" },
+      };
+    }
     const q = getNextQuestion(merged) ?? "What is your plot size and location?";
     return {
       kind: "local",
@@ -1439,6 +1461,14 @@ export function planConsultationTurn(
       nextState: { ...planState, stage: "planning" },
       phase: "planning",
       planningBridgeFromGathering: true,
+    };
+  }
+  if (merged.planning_engaged !== true) {
+    return {
+      kind: "local",
+      assistantText:
+        "For planning, share plot details.\nFor guidance, ask any questions.",
+      nextState: { ...merged, stage: "gathering" },
     };
   }
   return {

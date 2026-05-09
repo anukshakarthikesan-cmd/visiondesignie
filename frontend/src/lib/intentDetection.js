@@ -99,7 +99,7 @@ function scoreConsultation(t, raw) {
   return s;
 }
 
-function hasStructuredFromMerged(requirements) {
+export function hasStructuredFromMerged(requirements) {
   if (!requirements || typeof requirements !== "object") return false;
   return Boolean(
     requirements.plot_size ||
@@ -107,6 +107,45 @@ function hasStructuredFromMerged(requirements) {
       requirements.location ||
       requirements.bhk
   );
+}
+
+/**
+ * User moved past pure guidance / greetings into wanting a site plan (words or pasted facts).
+ * Conservative so vague education questions stay in knowledge mode + welcome copy.
+ * @param {string} message
+ */
+export function userIndicatesPlanningIntent(message) {
+  const raw = String(message || "").trim();
+  if (!raw) return false;
+  if (isSmallTalkMessage(raw)) return false;
+  const t = raw.toLowerCase().replace(/\s+/g, " ").trim();
+  if (
+    /\b(plan\s+my|want\s+to\s+plan|need\s+to\s+plan|like\s+to\s+plan|start\s+(the\s+)?plan|begin\s+planning|help\s+(me\s+)?plan)\b/.test(
+      t
+    )
+  ) {
+    return true;
+  }
+  if (
+    /\b(floor\s*plan|site\s*plan|layout\s+for|design\s+(my|our)\s+|sketch(\s+my|\s+the|\s+a)?\s+)\b/.test(
+      t
+    )
+  ) {
+    return true;
+  }
+  if (/\b\d\s*bhk\b/i.test(raw)) return true;
+  if (
+    /\d/.test(t) &&
+    /\b(ft|feet|′|'|\bm\b|meter|metres?|sq\.?\s*m|plot|site|[×x]\s*\d|\d\s*[×x])\b/i.test(
+      raw
+    )
+  ) {
+    return true;
+  }
+  if (/\b(plot|site)\b/.test(t) && /\b(size|dimension|\d)/i.test(raw)) {
+    return true;
+  }
+  return false;
 }
 
 function looksLikeExplanatoryQuestion(t) {

@@ -39,7 +39,9 @@ import { buildApiMessageWithRecentHistory } from "../lib/chatApiContext";
 import {
   detectIntent,
   getIntentScores,
+  hasStructuredFromMerged,
   isLightOpenerMessage,
+  userIndicatesPlanningIntent,
 } from "../lib/intentDetection";
 import {
   assistantLooksStructured,
@@ -84,8 +86,9 @@ const EMPTY_PLANNING_TEXT_FALLBACK =
   "The written analysis did not save this time (connection or formatting). Ask: **Summarize the site analysis and suggested plan in chat** and I will reply in full.";
 const EMPTY_STREAM_FALLBACK =
   "I couldn't capture a full reply this time (temporary network interruption). Please send your message again.";
-const PLANNING_ENTRY_HINT =
-  "For planning, share plot details.\nFor guidance, ask any questions.";
+/** Short ack after hi/ok — welcome bubble already states planning vs guidance. */
+const PLANNING_LIGHT_OPENER_ACK =
+  "Sure — share plot details when you want to plan, or ask anything for guidance.";
 
 function normalizeSseBuffer(text) {
   return String(text ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
@@ -105,8 +108,10 @@ function sleep(ms) {
 
 /** Matches the copy from {@link getNewChatWelcomeMessage}; used to tag/update persisted welcomes. */
 function isNewChatWelcomeContent(content) {
-  return /VisionDesignie\s*-\s*Architect Planner\s*&\s*Consultant/i.test(
-    String(content ?? "")
+  const s = String(content ?? "");
+  return (
+    /For planning, share plot details/i.test(s) &&
+    /For guidance, ask any questions/i.test(s)
   );
 }
 
@@ -1295,7 +1300,7 @@ export default function Chat({
         stageNow === "approval" ||
         stageNow === "complete");
 
-    const mergedForPlan = mergeRequirementsFromMessage(
+    const mergedBase = mergeRequirementsFromMessage(
       baseDesignState,
       text,
       {
@@ -1304,6 +1309,14 @@ export default function Chat({
         ),
       }
     );
+    const mergedForPlan = {
+      ...mergedBase,
+      planning_engaged:
+        baseDesignState.planning_engaged === true ||
+        mergedBase.planning_engaged === true ||
+        hasStructuredFromMerged(mergedBase) ||
+        userIndicatesPlanningIntent(text),
+    };
     const detected = detectIntent(text, mergedForPlan);
     const shouldShowPlanningEntryHint =
       isPlanner &&
@@ -1386,7 +1399,7 @@ export default function Chat({
     const decision = shouldShowPlanningEntryHint
       ? {
           kind: "local",
-          assistantText: PLANNING_ENTRY_HINT,
+          assistantText: PLANNING_LIGHT_OPENER_ACK,
           nextState: { ...mergedForPlan, stage: "gathering" },
         }
       : canForcePlan
